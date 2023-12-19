@@ -110,11 +110,16 @@ $(document).ready(function () {
 					</div>
 					<div class="titulo_en"><b>📽&nbsp;&#95;&#95;<i>${originalTitle}</i>&#95;&#95;</b></div>
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
-					<div class="genero"><b>🎭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Género&nbsp;|&#42;&#42;</b>&nbsp;&#42;&#42;${getGenres(movie.genre_ids)}&#42;&#42;</div><br>
-					<div class="ano"><b>🗓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Año&nbsp;|&#42;&#42;</b>&nbsp;&#95;&#95;<i>${releaseYear}</i>&#95;&#95;</div><br>
-					<div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div><br>
-					<div class="idioma"><b>🗣&nbsp;&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div><br>
-					<div class="audio"><b>🎧&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Audio&nbsp;|&#42;&#42;&nbsp;🇲🇽&nbsp;&#42;&#42;#Latino&#42;&#42;</b></div><br>
+					<div class="genero"><b>🎭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Género&nbsp;|&#42;&#42;</b>&nbsp;&#42;&#42;${getGenres(movie.genre_ids)}&#42;&#42;</div>
+					</br>
+					<div class="ano"><b>🗓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Año&nbsp;|&#42;&#42;</b>&nbsp;&#95;&#95;<i>${releaseYear}</i>&#95;&#95;</div>
+					</br>
+					<div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div>
+					</br>
+					<div class="idioma"><b>🗣&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div>
+					</br>
+					<div class="audio"><b>🎧&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Audio&nbsp;|&#42;&#42;&nbsp;🇲🇽&nbsp;&#42;&#42;#Latino&#42;&#42;</b></div>
+					</br>
 					<div class="Sinopsis"><b>📝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Sinopsis&nbsp;|&#42;&#42;</b>&nbsp;<code>&#96;${overview}&#96;</code></div>
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
 					<div class="redes"><b>▫️&nbsp;&#42;&#42;Síguenos&nbsp;como&#42;&#42;&nbsp;@AstroPeliculasOf</b></div></div>
@@ -133,9 +138,12 @@ $(document).ready(function () {
 					<div class="titulo_es"><b>🍿&nbsp;&#42;&#42;${title}&#42;&#42;</b></div>
 					<div class="titulo_en"><b>📽&nbsp;&#95;&#95;<i>${originalTitle}</i>&#95;&#95;</b></div>
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
-					<div class="ano"><b>🗓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Año&nbsp;|&#42;&#42;</b>&nbsp;&#95;&#95;${releaseYear}&#95;&#95;</div><br>
-					<div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div><br>
-					<div class="idioma"><b>🗣&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div><br>
+					<div class="ano"><b>🗓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Año&nbsp;|&#42;&#42;</b>&nbsp;&#95;&#95;${releaseYear}&#95;&#95;</div>
+					</br>
+					<div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div>
+					</br>
+					<div class="idioma"><b>🗣&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div>
+					</br>
 					<div class="audio"><b>🎧&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Audio&nbsp;|&#42;&#42;&nbsp;🇲🇽&nbsp;&#42;&#42;#Latino&#42;&#42;</b></div>
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
 					<div class="redes"><b>▫️&nbsp;&#42;&#42;Síguenos&nbsp;como&#42;&#42;&nbsp;@AstroPeliculasOf</b></div>
