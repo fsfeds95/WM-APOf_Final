@@ -69,12 +69,12 @@ $(document).ready(function () {
 					ID: ${id}
 				</span>
 				<span class="movie-card_genre">
-					<a href="https://wm-apof1.onrender.com/?imgUrl=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+					<a href="https://wmapof.cyclic.app/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
 						Poster
 					</a>
 				</span>
 				<span class="movie-card_genre">
-					<a href="https://long-rose-calf-tie.cyclic.app/?imgUrl=https://image.tmdb.org/t/p/original${backdropPath}" target="_blank">
+					<a href="https://wmapof.cyclic.app/b?url=https://image.tmdb.org/t/p/original${backdropPath}" target="_blank">
 						Backdrop
 					</a>
 				</span>
@@ -254,7 +254,7 @@ $(document).ready(function () {
 
    ca: "🇪🇸&nbsp;&#42;&#42;#Catalan&#42;&#42;",
 
-   es: "🇲🇽&nbsp;&#42;&#42;#Español&#42;&#42;",
+   es: "🇲🇽/🇪🇸&nbsp;&#42;&#42;#Español&#42;&#42;",
 
    fr: "🇫🇷&nbsp;&#42;&#42;#Frances&#42;&#42;",
 
