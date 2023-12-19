@@ -63,7 +63,7 @@ $(document).ready(function () {
     "ú": "u"
    };
 
-   resultsHtml += `	<div class="movie-card">
+   resultsHtml += `<div class="movie-card">
 			<div class="movie-card__header" style="background-image: url(https://image.tmdb.org/t/p/w500${backdropPath})">
 				<span class="movie-card_genre">
 					ID: ${id}
