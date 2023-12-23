@@ -56,14 +56,18 @@
 </nav>
 <!------------------------>
   <header id="header_2">
-  <div id="years"><center>Peliculas del año: Cargando año...</center></div>
+    <div id="text">
+        Ingresa el titulo de una película.
+      </div>
+    <input type="text" id="searchInput" placeholder="Ingrese el título de una película">
+    <button type="button" id="searchButton">BUSCAR</button>
   </header>
   
-	<main id="main">Espere cargando peliculas...</main>
+  <div id="results"></div>
  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script  src="./js/preloader.js"></script><script  src="./js/nav.js"></script>
   <script  src="./js/copy.js"></script>
-  <script  src="./js/news_tmdb.js"></script>
+  <script  src="./js/search_tmdb.js"></script>
 </body>
 </html>

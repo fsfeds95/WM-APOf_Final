@@ -3,12 +3,11 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>👩‍🚀💀 AsᴛʀᴏPᴇʟɪᴄᴜʟᴀsOғ 💀👩‍🚀 - INICIO</title>
+ <title>👩‍🚀💀 AsᴛʀᴏPᴇʟɪᴄᴜʟᴀsOғ 💀👩‍🚀 - POSTERS</title>
  <link rel="icon" type="image/x-icon" href="./favicon.ico">
  <link rel="stylesheet" href="./CSS/style.css">
  <link rel="stylesheet" href="./CSS/preloader.css">
  <link rel="stylesheet" href="./CSS/nav.css">
- <link rel="stylesheet" href="./CSS/copy.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" >
 </head>
 <body>
@@ -55,15 +54,20 @@
   </button>
 </nav>
 <!------------------------>
-  <header id="header_2">
-  <div id="years"><center>Peliculas del año: Cargando año...</center></div>
-  </header>
-  
-	<main id="main">Espere cargando peliculas...</main>
+  <form action="https://wmapof.cyclic.app/p" method="get">
+    <header id="header_2">
+        <div id="text">
+          Ingresa el enlace de tu poster.
+        </div>
+        <input type="text" id="searchInput" placeholder="Ingrese el enlave del poster" name="url">
+        <button type="submit" id="searchButton">ENVIAR</button>
+    </header>
+  </form>
+
+  <div id="results"></div>
  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script  src="./js/preloader.js"></script><script  src="./js/nav.js"></script>
-  <script  src="./js/copy.js"></script>
-  <script  src="./js/news_tmdb.js"></script>
+  <script  src="./js/preloader.js"></script>
+  <script  src="./js/nav.js"></script>
 </body>
 </html>
