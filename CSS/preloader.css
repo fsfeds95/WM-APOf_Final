@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #FFF;
+  background-color: var(--blanco);
   z-index:999;
   transition: all 1s 1s ease-out;
   opacity:1;
@@ -20,7 +20,7 @@
   z-index:-1;
 }
 .loader__text {
-  color: darkred;
+  color: var(--negro);
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: Anton, sans-serif;
@@ -31,14 +31,14 @@
   width: 56px;
   height: 70px;
   top: calc(25vh - 70px);
-  background: darkred;
+  background: var(--negro);
   z-index: -1;
 }
 .loader__filmstrip:before, .loader__filmstrip:after {
   content: "";
   position: absolute;
   height: 200%;
-  border-left: 5px dashed #FFF;
+  border-left: 5px dashed var(--blanco);
   -webkit-animation: roll .9s infinite;
           animation: roll .9s infinite;
 }

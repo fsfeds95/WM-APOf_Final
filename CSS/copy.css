@@ -3,9 +3,9 @@
   float: right !important;
 	text-align: right !important;
 	margin-bottom: -2.52em;
-	background-color: var(--secondary-color);
+	background-color: var(--negro);
 	color:#fff;
-	z-index: 9;
+	z-index: 1;
 	
 	padding-top: .5em;
 	padding-left: .7em;
@@ -19,7 +19,7 @@
 }
 .copy:hover,
 .copy:active {
-  background-color: #35C7BD;
+  background-color: var(--gris);
   
   -webkit-transition: all .25s ease;
   -moz-transition: all .25s ease;
