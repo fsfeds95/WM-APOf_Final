@@ -89,13 +89,13 @@ $(document).ready(function () {
 			<div class="d">
 
 
-        <a class="copy" onclick="copyTextById('peli_${id}_1')"> Copiar</a>
+        <button class="copy" onclick="copyTextById('peli_${id}_1', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
 				<div class="contenedor border" id="peli_${id}_1">${title.replace(/:|\s|-|!|¡|,|¿/g, function (match) {
       return replaceTitle[match];
      })}_(${releaseYear})_540p_dual-lat_@AstroPeliculasOf.mp4</div>
         
         
-        <a class="copy" onclick="copyTextById('peli_${id}_2')"> Copiar</a>
+        <button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
 				<div class="contenedor border" id="peli_${id}_2">
 					<div class="titulo_es">
 						<b>
@@ -113,14 +113,14 @@ $(document).ready(function () {
 					<div class="genero"><b>🎭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Género&nbsp;|&#42;&#42;</b>&nbsp;${getGenres(movie.genre_ids)}</div><div>&nbsp;</div>
 					<div class="ano"><b>🗓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Año&nbsp;|&#42;&#42;</b>&nbsp;&#95;&#95;<i>${releaseYear}</i>&#95;&#95;</div><div>&nbsp;</div>
 					<div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div><div>&nbsp;</div>
-					<div class="idioma"><b>🗣&nbsp;&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div><div>&nbsp;</div>
+					<div class="idioma"><b>🗣&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div><div>&nbsp;</div>
 					<div class="audio"><b>🎧&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Audio&nbsp;|&#42;&#42;&nbsp;🇲🇽&nbsp;&#42;&#42;#Latino&#42;&#42;</b></div><div>&nbsp;</div>
 					<div class="Sinopsis"><code>&#96;&#96;&#96;📝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sinopsis&nbsp;|<br>${overview}&#96;&#96;&#96;</code></div>
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
 					<div class="redes"><b>▫️&nbsp;&#42;&#42;Síguenos&#42;&#42;&nbsp;@AstroPeliculasOf</b></div></div>
 				
 				
-				<a class="copy" onclick="copyTextById('peli_${id}_3')"> Copiar</a>
+				<button class="copy" onclick="copyTextById('peli_${id}_3', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
 				<div class="contenedor border" id="peli_${id}_3">
 				  <div class="trailer">📘&nbsp;TheMovieDB&nbsp;📘&nbsp;-&nbsp;https://www.themoviedb.org/movie/${id}/&nbsp;&&&nbsp;📽&nbsp;Trailer&nbsp;Oficial&nbsp;📽&nbsp;-&nbsp;https://youtu.be/${getTrailerKey(id)}</div>
 					<div class="canal_contenedor">👨‍🚀&nbsp;Cᴏɴᴛᴇɴᴇᴅᴏʀ&nbsp;👨‍🚀&nbsp;-&nbsp;https://t.me/+3fe6UvaLvKk2MGVh</div>
@@ -129,7 +129,7 @@ $(document).ready(function () {
 					</div>
 					
 					
-				<a class="copy" onclick="copyTextById('peli_${id}_4')"> Copiar</a>
+				<button class="copy" onclick="copyTextById('peli_${id}_4', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
 				<div class="contenedor border" id="peli_${id}_4">
 					<div class="titulo_es"><b>🍿&nbsp;&#42;&#42;${title}&#42;&#42;</b></div>
 					<div class="titulo_en"><b>📽&nbsp;&#95;&#95;<i>${originalTitle}</i>&#95;&#95;</b></div>
@@ -141,7 +141,7 @@ $(document).ready(function () {
 					<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
 					<div class="redes"><b>▫️&nbsp;&#42;&#42;Síguenos&#42;&#42;&nbsp;@AstroPeliculasOf</b></div>
 				</div>
-				<a class="copy" onclick="copyTextById('peli_${id}_5')"> Copiar</a>
+				<button class="copy" onclick="copyTextById('peli_${id}_5', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
 				<div class="contenedor border" id="peli_${id}_5">
 					<div class="trailer">📘&nbsp;TheMovieDB&nbsp;📘&nbsp;-&nbsp;https://www.themoviedb.org/movie/${id}/&nbsp;&&&nbsp;📽&nbsp;Trailer&nbsp;Oficial&nbsp;📽&nbsp;-&nbsp;https://youtu.be/${getTrailerKey(id)}</div>
 					<div class="canal_principal">🌎&nbsp;Canal&nbsp;Principal&nbsp;🌎&nbsp;-&nbsp;@AstroPeliculasOf</div>
