@@ -1,4 +1,5 @@
 .copy {
+  border: none;
   position: relative;
   float: right !important;
 	text-align: right !important;
@@ -27,3 +28,64 @@
   -o-transition: all .25s ease;
   transition: all .25s ease;
 }
+
+.message-container {
+      /*background: #0015FF;*/
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .message {
+      padding: 10px 0;
+      background-color: var(--negro);
+      opacity: 1;
+      border-radius: 25px;
+      top: 100%;
+      margin-top: 100%;
+      display: none;
+      text-align: center;
+      color: #FFFFFF;
+      transition: all 0.5s ease;
+      width: 75%;
+      
+      border: 3px solid var(--gris);
+      
+      transition: all .5s ease;
+      animation: slide-in 0.5s ease;
+      
+      -webkit-box-shadow: 0 0 2px 1px var(--gris2);
+      box-shadow: 0 0 2px 1px var(--blanco2);
+    }
+
+    .message.active {
+      top: 1rem;
+      margin-top: 1rem;
+      display: block;
+      transition: all .5s ease;
+      animation: slide-out 0.5s ease;
+    }
+
+    @keyframes slide-in {
+      from {
+        top: -100%;
+      }
+      to {
+        top: 1rem;
+      }
+    }
+
+    @keyframes slide-out {
+      from {
+        top: 1rem;
+      }
+      to {
+        top: -100%;
+      }
+    }
