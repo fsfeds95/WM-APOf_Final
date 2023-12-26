@@ -15,6 +15,7 @@
 
 :root {
  --blanco: #FFFFFF;
+ --blanco2:rgba(255, 255, 255, .75);
  --negro: #252525;
  --gris: #454545;
  
