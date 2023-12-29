@@ -126,6 +126,11 @@ function showMovies(data) {
 
 <div class="movie-card">
   <div class="movie-card__header" style="background-image: url(${IMG_URL+backdrop_path})">
+        <span class="movie-card_genre">
+          <a href="https://www.themoviedb.org/movie/${id}/" target="_blank">
+            Toda la información
+          </a>
+        </span>
   </div>
     
   <div class="movie-card_content">
