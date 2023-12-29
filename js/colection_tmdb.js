@@ -2,43 +2,43 @@ $(document).ready(function () {
  $("#searchButton").click(function () {
   var searchQuery = $("#searchInput").val();
 
-  searchMovies(searchQuery);
+  searchCollection(searchQuery);
  });
 
- function searchMovies(query) {
+ function searchCollection(query) {
   if (query == "") {
    $("#results").html("<p>Ingrese un título de película para buscar.</p>");
   } else {
    $.getJSON(
     "https://api.themoviedb.org/3/search/collection?api_key=74dc824830c7f93dc61b03e324070886&query="+query +"&language=es",
     function (data) {
-     var movies = data.results;
+     var collections = data.results;
 
-     if (movies.length === 0) {
+     if (collections.length === 0) {
       $("#results").html("<p>No se encontraron películas con ese título.</p>");
      } else {
-      displayMovies(movies);
+      displayCollection(collections);
      }
     }
    );
   }
  }
 
- function displayMovies(movies) {
+ function displayCollection(collections) {
   var resultsHtml = "";
 
-  movies.forEach(function (movie) {
-   var id = movie.id;
+  collections.forEach(function (collection) {
+   var idCollection = collection.id;
 
-   var title = movie.name;
+   var title = collection.name;
 
-   var originalTitle = movie.original_name;
+   var originalTitle = collection.original_name;
 
-   var posterPath = movie.poster_path;
+   var posterPath = collection.poster_path;
 
-   var backdropPath = movie.backdrop_path;
+   var backdropPath = collection.backdrop_path;
 
-   var overview = movie.overview;
+   var overview = collection.overview;
 
    var replaceTitle = {
     ":": "",
@@ -54,11 +54,31 @@ $(document).ready(function () {
     "ó": "o",
     "ú": "u"
    };
+//------------------------------------------
 
+ function searchCollectionDetails(query) {
+    if (query == "") {
+     $("#results").html("<p>Ingrese un título de película para buscar.</p>");
+    } else {
+      $.getJSON('https://api.themoviedb.org/3/collection/'+idCollection+'?api_key=74dc824830c7f93dc61b03e324070886&language=es',
+      function (data) {
+        var collectionsDetails = data.results;
+        if (collectionsDetails.length === 0) {
+          $("#results").html("<p>No se encontraron películas con ese título.</p>");
+        } else {
+          displayCollectionDetails(collectionsDetails);
+        }
+      }
+      );
+    }
+ }
+ console.log('https://api.themoviedb.org/3/collection/'+idCollection+'?api_key=74dc824830c7f93dc61b03e324070886&language=es')
+ 
+//------------------------------------------
    resultsHtml += `	<div class="movie-card">
 			<div class="movie-card__header" style="background-image: url(https://image.tmdb.org/t/p/w500${backdropPath})">
 				<span class="movie-card_genre">
-					ID: ${id}
+					ID: ${idCollection}
 				</span>
 				<span class="movie-card_genre">
 					<a href="https://wmapof.cyclic.app/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
@@ -71,7 +91,7 @@ $(document).ready(function () {
 					</a>
 				</span>
 				<span class="movie-card_genre">
-					<a href="https://www.themoviedb.org/movie/${id}/" target="_blank">
+					<a href="https://www.themoviedb.org/movie/${idCollection}/" target="_blank">
 						Toda la información
 					</a>
 				</span>
@@ -81,14 +101,14 @@ $(document).ready(function () {
 			<div class="d">
 
 
-        <button class="copy" onclick="copyTextById('peli_${id}_1', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
-				<div class="contenedor border" id="peli_${id}_1">${title.replace(/:|\s|-|!|¡|,|¿/g, function (match) {
+        <button class="copy" onclick="copyTextById('peli_${idCollection}_1', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
+				<div class="contenedor border" id="peli_${idCollection}_1">${title.replace(/:|\s|-|!|¡|,|¿/g, function (match) {
       return replaceTitle[match];
      })}_540p_dual-lat_@AstroPeliculasOf.mp4</div>
         
         
-        <button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
-				<div class="contenedor border" id="peli_${id}_2">
+        <button class="copy" onclick="copyTextById('peli_${idCollection}_2', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
+				<div class="contenedor border" id="peli_${idCollection}_2">
 					<div class="titulo_es">
 						<b>
 							🔠&nbsp;&#42;&#42;#${title.replace(/:|\s|-|!|¡|,|¿/g, function(match) {return replaceTitle[match];})

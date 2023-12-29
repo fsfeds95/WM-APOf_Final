@@ -2,8 +2,8 @@ const copyToClipboard = (id) => {
       const text = document.getElementById(id).innerText;
       navigator.clipboard.writeText(text)
         .then(() => {
-          console.log('Texto copiado al portapapeles: ' + text);
-          showMessage('Texto copiado de ' + id);
+          console.log('Copiado el siguiente texto al portapapeles: ' + text);
+          showMessage('¡Texto copiado!');
         })
         .catch((error) => {
           console.error('Error al copiar el texto: ' + error);
