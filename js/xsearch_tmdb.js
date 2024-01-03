@@ -6,6 +6,7 @@ const query = 'query=';
 const LANG_ES = 'language=es-MX';
 const LANG_EN = 'language=en-US';
 
+
 $(document).ready(function () {
  $("#searchButton").click(function () {
   var searchQuery = $("#searchInput").val();
@@ -13,14 +14,12 @@ $(document).ready(function () {
   searchMovies(searchQuery);
  });
 
- function searchMovies(query) {
-  if (query == "") {
+ function searchMovies(querySearch) {
+  if (querySearch == "") {
    $("#results").html("<p>Ingrese un título de película para buscar.</p>");
   } else {
    $.getJSON(
-    "https://api.themoviedb.org/3/search/movie?api_key=74dc824830c7f93dc61b03e324070886&query=" +
-     query +
-     "&language=es-MX",
+     BASE_URL + '/search/movie?' + API_KEY + '&' + query + querySearch + '&' + LANG_ES,
     function (data) {
      var movies = data.results;
 
@@ -70,19 +69,21 @@ $(document).ready(function () {
     "ó": "o",
     "ú": "u"
    };
+   
+   var movieCredits = showMovieCredits(id);
 
    resultsHtml += `        <div class="movie-card">
-                        <div class="movie-card__header" style="background-image: url(https://image.tmdb.org/t/p/w500${backdropPath})">
+                        <div class="movie-card__header" style="background-image: url(${IMG_500+backdropPath})">
                                 <span class="movie-card_genre">
                                         ID: ${id}
                                 </span>
                                 <span class="movie-card_genre">
-                                        <a href="https://wmapof.cyclic.app/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+                                        <a href="https://wmapof.cyclic.app/p?url=${IMG_ORIGINAL+posterPath}" target="_blank">
                                                 Poster
                                         </a>
                                 </span>
                                 <span class="movie-card_genre">
-                                        <a href="https://wmapof.cyclic.app/b?url=https://image.tmdb.org/t/p/original${backdropPath}" target="_blank">
+                                        <a href="https://wmapof.cyclic.app/b?url=${IMG_ORIGINAL+backdropPath}" target="_blank">
                                                 Backdrop
                                         </a>
                                 </span>
@@ -93,7 +94,8 @@ $(document).ready(function () {
                                 </span>
                         </div>
                 <div class="movie-card_content">
-                                <div class="movie-card__poster" data-src="${IMG_500+posterPath}"></div>
+                                
+    <div class="movie-card__poster" data-src="${IMG_500+posterPath}"></div>
                         <div class="d">
 
 
@@ -123,6 +125,14 @@ $(document).ready(function () {
                                         <div class="calidad"><b>📺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Calidad&nbsp;|&#42;&#42;&nbsp;&#42;&#42;#540p&#42;&#42;</b></div><div>&nbsp;</div>
                                         <div class="idioma"><b>🗣&nbsp;&#42;&#42;Idioma Original&nbsp;|&#42;&#42;&nbsp;${getLanguage(language)}</b></div><div>&nbsp;</div>
                                         <div class="audio"><b>🎧&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Audio&nbsp;|&#42;&#42;&nbsp;🇲🇽&nbsp;&#42;&#42;#Latino&#42;&#42;</b></div><div>&nbsp;</div>
+<div><b>👤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;Cast&nbsp;|&#42;&#42;&nbsp;&#42;&#42;${movieCredits}&#42;&#42;</b></div>
+<div>&nbsp;</div>
+<div><b>Director | ${showMovieDirectors(id)}</b></div>
+<div>&nbsp;</div>
+<div><b>Productores | ${showMovieProducers(id)}</b></div>
+<div>&nbsp;</div>
+<div><b>Escritor | ${showMovieWriters(id)}</b></div>
+<div>&nbsp;</div>
                                         <div class="Sinopsis"><code>&#96;&#96;&#96;📝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sinopsis&nbsp;|<br>${overview}&#96;&#96;&#96;</code></div>
                                         <div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
                                         <div class="redes"><b>▫️&nbsp;&#42;&#42;Síguenos&#42;&#42;&nbsp;@AstroPeliculasOf</b></div></div>
@@ -159,7 +169,9 @@ $(document).ready(function () {
   });
 
   $("#results").html(resultsHtml);
-
+  
+  
+  
 // Seleccionar todos los elementos con la clase 'movie-card__poster'
 const lazyImages = document.querySelectorAll('.movie-card__poster');
 
@@ -172,11 +184,10 @@ const lazyImageOptions = {
 // Crear una instancia de IntersectionObserver con una función de devolución de llamada
 const lazyImageObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const lazyImage = entry.target;
-      lazyImage.style.opacity = 1; // Mostramos la imagen al establecer la opacidad en 1
-      lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`;
-      lazyImageObserver.unobserve(lazyImage);
+    if (entry.isIntersecting) { // Verificar si el elemento es visible en la pantalla
+      const lazyImage = entry.target; // Obtener el elemento actual
+      lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`; // Asignar la URL de la imagen como fondo
+      lazyImageObserver.unobserve(lazyImage); // Dejar de observar el elemento para evitar cargarlo nuevamente
     }
   });
 }, lazyImageOptions);
@@ -185,32 +196,9 @@ const lazyImageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(lazyImage => {
   lazyImageObserver.observe(lazyImage);
 });
- }
-
- function getTrailerKey(movieId) {
-  var trailerKey = "";
-
-  $.ajax({
-   url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=fd7402172ca9f36816c7691becaf455f`,
-
-   async: false,
-
-   success: function (data) {
-    var videos = data.results.filter(function (video) {
-     return (
-      video.site === "YouTube" && 
-      video.type === "Trailer" && 
-      video.iso_639_1 === "en"
-     );
-    });
-
-    if (videos.length > 0) {
-     trailerKey = videos[0].key;
-    }
-   }
-  });
-
-  return trailerKey;
+  
+  
+  
  }
 
 function getGenres(genreIds) {
@@ -280,7 +268,7 @@ function getGenres(genreIds) {
    }
   });
 
-  return genreList.join(",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+  return genreList.join("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
  }
 
  function getLanguage(languageCode) {
@@ -322,4 +310,195 @@ function getColor(vote) {
     } else {
     return '#fffbf4'
   }
+}
+
+function getTrailerKey(movieId) {
+  var trailerKey = "";
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/videos?${API_KEY}&${LANG_EN}`,
+    async: false,
+    success: function(data) {
+      var videos = data.results.filter(function(video) {
+        return (
+          video.site === "YouTube" &&
+          video.type === "Trailer" &&
+          video.iso_639_1 === "en"
+        );
+      });
+
+      if (videos.length > 0) {
+        trailerKey = videos[0].key;
+      }
+    }
+  });
+
+   //¡Aquí tienes el trailer key, mi amor! Ahora podrás disfrutar de un adelanto de la película que tanto te gusta.
+   
+  //console.log("El trailer key es: http://www.youtube.com/watch?v=" + trailerKey);
+
+  return trailerKey;
+}
+
+
+//-----------------------------------------
+//-----------------------------------------
+//-----------------------------------------
+//-----------------------------------------
+
+
+
+// Funcion actores ------------------------
+function showMovieCredits(movieId) {
+  var movieCredits = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_ES}`,
+    async: false,
+    success: function(response) {
+
+      // Filtrar los actores más relevantes
+      var relevantActors = response.cast.filter(function(actor) {
+        return actor.order <= 5;
+        // Puedes ajustar el numero de relevancia según tus preferencias, si quieres que aparezcan "3 actores" tienes que colocar como numero "2"
+      });
+
+      // Obtener solo los nombres de los actores y unirlos en un string
+      var actorNames = relevantActors.map(function(actor) {
+        return actor.name;
+      });
+
+      movieCredits = actorNames.join("&#42;&#42;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;&#42;");
+      // Dividir los nombres de los actores
+
+    },
+    error: function(error) {
+      console.log(error);
+      // Algo no salió como esperábamos.
+    }
+  });
+
+  return movieCredits;
+}
+
+// Funcion directores ---------------------
+function showMovieDirectors(movieId) {
+  var movieDirector = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_EN}`,
+    async: false,
+    success: function(response) {
+
+      // Obtener los directores de la película
+      var directors = response.crew.filter(function(crewMember) {
+        return crewMember.job === "Director";
+      });
+
+      if (directors.length > 0) {
+        movieDirector = directors[0].name; // Obtener el nombre del primer director
+      } else {
+        movieDirector = "El director es un misterio.";
+      }
+
+    },
+    error: function(error) {
+      console.log(error);
+      // Algo no salió como esperábamos.
+    }
+  });
+
+  return movieDirector;
+}
+
+// Funcion Productores --------------------
+function showMovieProducers(movieId) {
+  var movieProducers = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_ES}`,
+    async: false,
+    success: function(response) {
+
+      // Filtrar los productores más relevantes
+      var relevantProducers = response.crew.filter(function(crewMember) {
+        return crewMember.job === "Producer";
+      });
+
+      // Filtrar los productores ejecutivos si no hay productores regulares
+      if (relevantProducers.length === 0) {
+        relevantProducers = response.crew.filter(function(crewMember) {
+          return crewMember.job === "Executive Producer";
+        });
+      }
+
+      // Obtener los nombres y los cargos de los productores
+      var producerInfo = relevantProducers.map(function(producer) {
+        var jobTitle = producer.job === "Executive Producer" ? "<i>Productor Ejecutivo</i>" : "<i>Productor</i>";
+        return `${producer.name} (${jobTitle})`;
+      });
+
+      if (producerInfo.length > 0) {
+        movieProducers = producerInfo.join(", ");
+        // Dividir los nombres y los cargos de los productores
+      } else {
+        movieProducers = "Productores no encontrados.";
+      }
+
+    },
+    error: function(error) {
+      console.log(error);
+      // Algo no salió como esperábamos.
+    }
+  });
+
+  return movieProducers;
+}
+
+// Funcion escritores ---------------------
+function showMovieWriters(movieId) {
+  var movieWriters = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_ES}`,
+    async: false,
+    success: function(response) {
+
+      // Obtener los escritores de la película
+      var writers = response.crew.filter(function(crewMember) {
+        return crewMember.job === "Writer";
+      });
+
+      if (writers.length > 0) {
+        movieWriters = writers.map(function(writer) {
+          var jobTitle = writer.job === "Screenplay" ? "Guionista" : "Historia";
+          return `${writer.name} (${jobTitle})`;
+        }).join(", ");
+        // Obtener los nombres de los escritores y sus títulos en español, separados por coma
+      } else {
+        var storyWriters = response.crew.filter(function(crewMember) {
+          return crewMember.job === "Story";
+        });
+
+        var screenplayWriters = response.crew.filter(function(crewMember) {
+          return crewMember.job === "Screenplay";
+        });
+
+        var storyAndScreenplayWriters = storyWriters.concat(screenplayWriters);
+
+        movieWriters = storyAndScreenplayWriters.map(function(writer) {
+          var jobTitle = writer.job === "Screenplay" ? "Guionista" : "Historia";
+          return `${writer.name} (${jobTitle})`;
+        }).join(", ");
+        // Si no hay escritores regulares, mostramos los escritores de "Historia y Guion" con sus títulos en español
+      }
+
+    },
+    error: function(error) {
+      console.log(error);
+      // Algo no salió como esperábamos.
+    }
+  });
+
+  return movieWriters;
 }
