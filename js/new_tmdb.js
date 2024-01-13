@@ -9,8 +9,8 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const LANG_ES = '&language=es-MX';
 const LANG_EN = '&language=en-US';
 
-const API_URL = BASE_URL+'/discover/movie?primary_release_year=2023&'+API_KEY+LANG_ES;
-//const API_URL = BASE_URL+'/discover/movie?primary_release_year='+ano+'&'+API_KEY+LANG_ES;
+//const API_URL = BASE_URL+'/discover/movie?primary_release_year=2023&'+API_KEY+LANG_ES;
+const API_URL = BASE_URL+'/discover/movie?primary_release_year='+ano+'&'+API_KEY+LANG_ES;
 //const API_URL = BASE_URL+'/discover/movie?'+API_KEY+'&append_to_response=videos'+ LANG_ES;
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
