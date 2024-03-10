@@ -100,13 +100,14 @@ function showMovies(data) {
     const genreIdToName = (id) => genres.find(g => g.id === id).name
     var replaceTitle = { ":": "", " ": "_", "-": "_", "¡": "", "!": "", ",": "", "¿": "" };
     var replaceLang = {
-      "en": "🇺🇸  Ingles",
-      "fr": "🇫🇷  Frances",
-      "it": "🇮🇹  Italiano",
-      "de": "🇩🇪  Aleman",
-      "ja": "🇯🇵  Japones",
-      "es": "🇲🇽 / 🇪🇦  Español",
-      "ko": "🇰🇷 / 🇰🇵  Coreano"
+      "en": "🇺🇸 Ingles",
+      "fr": "🇫🇷 Frances",
+      "it": "🇮🇹 Italiano",
+      "de": "🇩🇪 Aleman",
+      "ja": "🇯🇵 Japones",
+      "es": "🇲🇽 / 🇪🇦 Español",
+      "ko": "🇰🇷 / 🇰🇵 Coreano",
+      "pt": "🇵🇹 / 🇧🇷 Portugués"
     };
     const moviesEL = document.createElement('div');
     moviesEL.classList.add('movie');
