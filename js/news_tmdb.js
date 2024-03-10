@@ -119,7 +119,7 @@ function showMovies(data) {
     const { key, site, type, title, original_language, release_dates, original_title, backdrop_path, poster_path, release_date, vote_average, overview, id, genre_ids } = movie;
     const genreIdToName = (id) => genres.find(g => g.id === id).name
     var replaceTitle = { ":": "", " ": "_", "-": "_", "¡": "", "!": "", ",": "", "¿": "" };
-    var replaceLang = { "en": "🇺🇸  #Ingles", "fr": "🇫🇷  #Frances", "it": "🇮🇹  #Italiano", "de": "🇩🇪  #Aleman", "ja": "🇯🇵  #Japones", "es": "🇲🇽  #Español", "ko": "🇰🇷 / 🇰🇵  #Coreano" };
+    var replaceLang = { "en": "🇺🇸  #Ingles", "fr": "🇫🇷  #Frances", "it": "🇮🇹  #Italiano", "de": "🇩🇪  #Aleman", "ja": "🇯🇵  #Japones", "es": "🇲🇽  #Español", "ko": "🇰🇷 / 🇰🇵  #Coreano", "pt": "🇵🇹 / 🇧🇷 Portugués" };
     const moviesEL = document.createElement('div');
     moviesEL.classList.add('movie');
     moviesEL.innerHTML = `
