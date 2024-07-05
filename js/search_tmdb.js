@@ -77,12 +77,12 @@ $(document).ready(function () {
                                         ID: ${id}
                                 </span>
                                 <span class="movie-card_genre">
-                                        <a href="https://wmapof.cyclic.app/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+                                        <a href="https://watermark-astropeliculas-final.onrender.com/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
                                                 Poster
                                         </a>
                                 </span>
                                 <span class="movie-card_genre">
-                                        <a href="https://wmapof.cyclic.app/b?url=https://image.tmdb.org/t/p/original${backdropPath}" target="_blank">
+                                        <a href="https://watermark-astropeliculas-final.onrender.com/b?url=https://image.tmdb.org/t/p/original${backdropPath}" target="_blank">
                                                 Backdrop
                                         </a>
                                 </span>
