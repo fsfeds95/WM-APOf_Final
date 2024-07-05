@@ -186,8 +186,8 @@ lazyImages.forEach(lazyImage => {
 
 // ...
 
-document.getElementById("years").innerHTML = '<center>Peliculas del año: 2023</center>';
-//document.getElementById("years").innerHTML = '<center>Peliculas del año: '+ano+'</center>';
+//document.getElementById("years").innerHTML = '<center>Peliculas del año: 2023</center>';
+document.getElementById("years").innerHTML = '<center>Peliculas del año: '+ano+'</center>';
 
 function getColor(vote) {
   if (vote >= 10) {
