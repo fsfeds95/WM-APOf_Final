@@ -88,7 +88,7 @@ $(document).ready(function () {
                                               ID: ${id}
                                       </span>
                                       <span class="movie-card_genre">
-                                              <a href="https://watermark-astropeliculas-final.onrender.com/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+                                              <a href="https://watermark-astropeliculas-final.onrender.com/ws?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
                                                       Poster
                                               </a>
                                       </span>
