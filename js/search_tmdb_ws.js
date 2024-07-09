@@ -371,3 +371,55 @@ function showMovieCredits(movieId) {
 
   return movieCredits;
 }
+
+// Funcion obtener poster de pelicula en español
+function obtenerPosterPelicula(movieId) {
+  var poster_URL = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_EN}`,
+    async: false,
+    success: function(response) {
+      var posters = response.posters;
+
+      var posterPath = posters.find(function(poster) {
+        return poster.iso_639_1 === "es";
+      });
+
+      if (posterPath) {
+        poster_URL = `https://image.tmdb.org/t/p/original${posterPath.file_path}`;
+      }
+    },
+    error: function(error) {
+      console.log('Ay, mi amor, algo salió mal:', error);
+    }
+  });
+
+  return poster_URL;
+}
+
+// Funcion obtener backdrop de pelicula en español
+function obtenerBackdropPelicula(movieId) {
+  var backdrops_URL = '';
+
+  $.ajax({
+    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_EN}`,
+    async: false,
+    success: function(response) {
+      var backdrops = response.backdrops;
+
+      var backdropsPath = backdrops.find(function(backdrops) {
+        return backdrops.iso_639_1 === "es" || backdrops.iso_639_1 === "en" || backdrops.iso_639_1 === "null";
+      });
+
+      if (backdropsPath) {
+        backdrops_URL = `https://image.tmdb.org/t/p/original${backdropsPath.file_path}`;
+      }
+    },
+    error: function(error) {
+      console.log('Ay, mi amor, algo salió mal:', error);
+    }
+  });
+
+  return backdrops_URL;
+}
