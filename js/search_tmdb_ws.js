@@ -25,9 +25,9 @@ $(document).ready(function () {
    $("#results").html("<p>Ingrese un título de película para buscar.</p>");
   } else {
    $.getJSON(
-    "https://api.themoviedb.org/3/search/movie?api_key=74dc824830c7f93dc61b03e324070886&query=" +
+    BASE_URL + "/search/movie?" + API_KEY + "&query=" +
      query +
-     "&language=es-MX",
+     "&" + LANG_ES,
     function (data) {
      var movies = data.results;
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
    var backdropPath = movie.backdrop_path;
    
-   var backdropUrl = backdropPath ? (language === "en" ? IMG_ORI : IMG_300) + backdropPath : "";
+   var backdropUrl = backdropPath ? (language === "en-US" ? IMG_500 : IMG_ORI) + backdropPath : "";
 
    var language = movie.original_language;
 
@@ -83,31 +83,29 @@ $(document).ready(function () {
    };
 
    resultsHtml += `<div class="movie-card">
-                              <div class="movie-card__header" style="background-image: url(https://image.tmdb.org/t/p/original${backdropPath})">
-                                      <span class="movie-card_genre">
-                                              ID: ${id}
-                                      </span>
-                                      <span class="movie-card_genre">
-                                              <a href="https://watermark-astropeliculas-final.onrender.com/ws?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
-                                                      Poster
-                                              </a>
-                                      </span>
-                                      <span class="movie-card_genre">
-                                              <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${backdropUrl}" target="_blank">
-                                                      Backdrop
-                                              </a>
-                                      </span>
-                                      <span class="movie-card_genre">
-                                              <a href="https://www.themoviedb.org/movie/${id}/" target="_blank">
-                                                      Toda la información
-                                              </a>
-                                      </span>
-                              </div>
-                      <div class="movie-card_content">
-                                      <div class="movie-card__poster" data-src="${IMG_500+posterPath}"></div>
-                              <div class="d">
+<div class="movie-card__header" style="background-image: url(${obtenerBackdropPelicula(id)})">
+  <span class="movie-card_genre">ID:‎ ${id}</span>
+  <span class="movie-card_genre">
+    <a href="https://watermark-astropeliculas-final.onrender.com/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+      Poster
+    </a>
+  </span>
+  <span class="movie-card_genre">
+    <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${obtenerBackdropPelicula(id)}" target="_blank">
+      Backdrop
+    </a>
+  </span>
+  <span class="movie-card_genre">
+    <a href="https://www.themoviedb.org/movie/${id}/" target="_blank">
+      Información
+    </a>
+  </span>
+</div>
+<div class="movie-card_content">
+  <div class="movie-card__poster" data-src="${IMG_500+posterPath}"></div>
+  <div class="d">
       
-<button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i> Copiar</button>
+<button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i>‎ Copiar</button>
 
 <div class="contenedor border" id="peli_${id}_2">
 
@@ -150,7 +148,7 @@ $(document).ready(function () {
 🎞️‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ <b>*Trailer*‎ |‎ <a href="https://youtu.be/${getTrailerKey(id)}">https://youtu.be/${getTrailerKey(id)}</a></b></div><div>‎ </div>
 
 
-<div class="descarga">⬇️‎ <b>*Ver / Descargar*‎ |‎ </b></div><div>‎ </div>
+<div class="descarga">⬇️‎ <b>*Ver / Descargar* | </div>
 
 
 
@@ -161,11 +159,7 @@ $(document).ready(function () {
 
 
 <div class="posdata">
-⚠️‎ *Posdata:*‎ *_Necesitas tener la aplicación de TeraBox para ver las peliculas, descargala gratis en Play Store o App Store._*
-</div>
-
-
-
+⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*</div>
 </div>
 </div>
 </div>
@@ -257,9 +251,9 @@ function getGenres(genreIds) {
 
          10749: "Romance",
 
-         878: "Ciencia_Ficcion",
+         878: "Ciencia‎ Ficcion",
 
-         10770: "Película_de_la_Television",
+         10770: "Película‎ de‎ la‎ Television",
 
          53: "Suspenso",
 
@@ -267,7 +261,7 @@ function getGenres(genreIds) {
 
          37: "Oeste",
 
-         10759: "Accion_y_Aventura",
+         10759: "Accion‎ y‎ Aventura",
 
          10762: "Infantil",
 
@@ -275,7 +269,7 @@ function getGenres(genreIds) {
 
          10764: "Realidad",
 
-         10765: "Ciencia_Ficcion_y_Fantasia",
+         10765: "Ciencia‎ Ficcion‎ y‎ Fantasia",
 
          10766: "Serial",
 
@@ -283,7 +277,7 @@ function getGenres(genreIds) {
 
          10768: "Politico",
 
-         10769: "Opcion_Interactiva"
+         10769: "Opcion‎ Interactiva"
 };
 
   var genreList = [];
@@ -303,7 +297,7 @@ function getGenres(genreIds) {
 
    ca: "🇪🇸‎ Catalan",
 
-   es: "🇲🇽/🇪🇸‎ Español",
+   es: "🇲🇽‎ /‎ 🇪🇸‎ Español",
 
    fr: "🇫🇷‎ Frances",
 
@@ -313,7 +307,7 @@ function getGenres(genreIds) {
 
    ja: "🇯🇵‎ Japones",
 
-   ko: "🇰🇷 / 🇰🇵‎ Coreano",
+   ko: "🇰🇷‎ /‎ 🇰🇵‎ Coreano",
 
    ru: "🇷🇺‎ Ruso",
 
@@ -400,7 +394,7 @@ function obtenerPosterPelicula(movieId) {
 
 // Funcion obtener backdrop de pelicula en español
 function obtenerBackdropPelicula(movieId) {
-  var backdrops_URL = '';
+  var backdrop_URL = '';
 
   $.ajax({
     url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_EN}`,
@@ -408,12 +402,12 @@ function obtenerBackdropPelicula(movieId) {
     success: function(response) {
       var backdrops = response.backdrops;
 
-      var backdropsPath = backdrops.find(function(backdrops) {
-        return backdrops.iso_639_1 === "es" || backdrops.iso_639_1 === "en" || backdrops.iso_639_1 === "null";
+      var backdropPath = backdrops.find(function(backdrop) {
+        return backdrop.iso_639_1 === "en";
       });
 
-      if (backdropsPath) {
-        backdrops_URL = `https://image.tmdb.org/t/p/original${backdropsPath.file_path}`;
+      if (backdropPath) {
+        backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
       }
     },
     error: function(error) {
@@ -421,5 +415,5 @@ function obtenerBackdropPelicula(movieId) {
     }
   });
 
-  return backdrops_URL;
+  return backdrop_URL;
 }
