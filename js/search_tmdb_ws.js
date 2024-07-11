@@ -431,8 +431,8 @@ function obtenerBackdropPelicula(movieId) {
         
         return (
           poster.iso_639_1 === "en"
-       //|| poster.iso_639_1 === "es"
-       //|| poster.iso_639_1 === "null"
+       || poster.iso_639_1 === "es"
+       || poster.iso_639_1 === "null"
         );
       });
 
