@@ -102,7 +102,7 @@ $(document).ready(function () {
   </span>
 </div>
 <div class="movie-card_content">
-  <div class="movie-card__poster" data-src="${IMG_500+posterPath}"></div>
+  <div class="movie-card__poster" data-src="${obtenerPosterPelicula(id)}"></div>
   <div class="d">
       
 <button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i>‎ Copiar</button>
@@ -128,6 +128,9 @@ $(document).ready(function () {
 <div class="genero"><b>🎭‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Género*‎ |</b>‎ _${getGenres(movie.genre_ids)}_</div><div>‎ </div>
 
 
+<div><b>👤‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Reparto*‎ |</b>‎ _${showMovieCredits(id)}_</div><div>‎ </div>
+
+
 <div class="calidad"><b>📺‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Calidad*‎ |‎ *HD*</b></div><div>‎ </div>
 
 
@@ -148,7 +151,7 @@ $(document).ready(function () {
 🎞️‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ <b>*Trailer*‎ |‎ <a href="https://youtu.be/${getTrailerKey(id)}">https://youtu.be/${getTrailerKey(id)}</a></b></div><div>‎ </div>
 
 
-<div class="descarga">⬇️‎ <b>*Ver / Descargar* | </div>
+<div class="descarga">🔗‎ <b>*Ver / Descargar*‎ |&nbsp;</div>
 
 
 
@@ -161,6 +164,19 @@ $(document).ready(function () {
 <div class="posdata">
 ⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*</div>
 </div>
+
+<div>
+  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/b?url=${obtenerBackdropPelicula(id)}">
+    BackDrop
+  </a><br>
+  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/p?url=${obtenerPosterPelicula(id)}">
+    Poster
+  </a><br>
+    <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/ws?url=${obtenerPosterPelicula(id)}">
+      Poster Ws
+    </a>
+</div>
+
 </div>
 </div>
 </div>`;
@@ -193,7 +209,7 @@ const lazyImageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(lazyImage => {
   lazyImageObserver.observe(lazyImage);
 });
- }
+}
 
  function getTrailerKey(movieId) {
   var trailerKey = "";
@@ -371,17 +387,26 @@ function obtenerPosterPelicula(movieId) {
   var poster_URL = '';
 
   $.ajax({
-    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_EN}`,
+    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
     async: false,
     success: function(response) {
       var posters = response.posters;
 
+      // Ordenar los posters por popularidad de forma descendente
+      posters.sort(function(a, b) {
+        return b.popularity - a.popularity;
+      });
+
       var posterPath = posters.find(function(poster) {
-        return poster.iso_639_1 === "es";
+        return (
+          poster.iso_639_1 === "es"
+       || poster.iso_639_1 === "en"
+     //|| poster.iso_639_1 === "null"
+        );
       });
 
       if (posterPath) {
-        poster_URL = `https://image.tmdb.org/t/p/original${posterPath.file_path}`;
+        poster_URL = `https://image.tmdb.org/t/p/w500${posterPath.file_path}`;
       }
     },
     error: function(error) {
@@ -403,7 +428,12 @@ function obtenerBackdropPelicula(movieId) {
       var backdrops = response.backdrops;
 
       var backdropPath = backdrops.find(function(backdrop) {
-        return backdrop.iso_639_1 === "en";
+        
+        return (
+          poster.iso_639_1 === "en"
+       //|| poster.iso_639_1 === "es"
+       //|| poster.iso_639_1 === "null"
+        );
       });
 
       if (backdropPath) {
