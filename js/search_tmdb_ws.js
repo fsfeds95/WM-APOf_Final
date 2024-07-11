@@ -13,76 +13,76 @@ const query = 'query=';
 const LANG_ES = 'language=es-MX';
 const LANG_EN = 'language=en-US';
 
-$(document).ready(function () {
- $("#searchButton").click(function () {
-  var searchQuery = $("#searchInput").val();
+$(document).ready(function() {
+  $("#searchButton").click(function() {
+    var searchQuery = $("#searchInput").val();
 
-  searchMovies(searchQuery);
- });
+    searchMovies(searchQuery);
+  });
 
- function searchMovies(query) {
-  if (query == "") {
-   $("#results").html("<p>Ingrese un título de película para buscar.</p>");
-  } else {
-   $.getJSON(
-    BASE_URL + "/search/movie?" + API_KEY + "&query=" +
-     query +
-     "&" + LANG_ES,
-    function (data) {
-     var movies = data.results;
+  function searchMovies(query) {
+    if (query == "") {
+      $("#results").html("<p>Ingrese un título de película para buscar.</p>");
+    } else {
+      $.getJSON(
+        BASE_URL + "/search/movie?" + API_KEY + "&query=" +
+        query +
+        "&" + LANG_ES,
+        function(data) {
+          var movies = data.results;
 
-     if (movies.length === 0) {
-      $("#results").html("<p>No se encontraron películas con ese título.</p>");
-     } else {
-      displayMovies(movies);
-     }
+          if (movies.length === 0) {
+            $("#results").html("<p>No se encontraron películas con ese título.</p>");
+          } else {
+            displayMovies(movies);
+          }
+        }
+      );
     }
-   );
   }
- }
 
- function displayMovies(movies) {
-  var resultsHtml = "";
+  function displayMovies(movies) {
+    var resultsHtml = "";
 
-  movies.forEach(function (movie) {
-   var id = movie.id;
+    movies.forEach(function(movie) {
+      var id = movie.id;
 
-   var title = movie.title;
+      var title = movie.title;
 
-   var originalTitle = movie.original_title;
+      var originalTitle = movie.original_title;
 
-   var tagline = movie.tagline;
+      var tagline = movie.tagline;
 
-   var releaseYear = movie.release_date.split("-")[0];
+      var releaseYear = movie.release_date.split("-")[0];
 
-   var posterPath = movie.poster_path;
+      var posterPath = movie.poster_path;
 
-   var backdropPath = movie.backdrop_path;
-   
-   var backdropUrl = backdropPath ? (language === "en-US" ? IMG_500 : IMG_ORI) + backdropPath : "";
+      var backdropPath = movie.backdrop_path;
 
-   var language = movie.original_language;
+      var backdropUrl = backdropPath ? (language === "en-US" ? IMG_500 : IMG_ORI) + backdropPath : "";
 
-   var overview = movie.overview;
-   
-   var duration = movie.runtime;
+      var language = movie.original_language;
 
-   var replaceTitle = {
-    ":": "",
-    " ": "_",
-    "-": "",
-    "¡": "",
-    "!": "",
-    ",": "",
-    "¿": "",
-    "á": "a",
-    "é": "e",
-    "í": "i",
-    "ó": "o",
-    "ú": "u"
-   };
+      var overview = movie.overview;
 
-   resultsHtml += `<div class="movie-card">
+      var duration = movie.runtime;
+
+      var replaceTitle = {
+        ":": "",
+        " ": "_",
+        "-": "",
+        "¡": "",
+        "!": "",
+        ",": "",
+        "¿": "",
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u"
+      };
+
+      resultsHtml += `<div class="movie-card">
 <div class="movie-card__header" style="background-image: url(${obtenerBackdropPelicula(id)})">
   <span class="movie-card_genre">ID:‎ ${id}</span>
   <span class="movie-card_genre">
@@ -180,170 +180,170 @@ $(document).ready(function () {
 </div>
 </div>
 </div>`;
-  });
-
-  $("#results").html(resultsHtml);
-
-// Seleccionar todos los elementos con la clase 'movie-card__poster'
-const lazyImages = document.querySelectorAll('.movie-card__poster');
-
-// Opciones de configuración del IntersectionObserver
-const lazyImageOptions = {
-  rootMargin: '0px', // Margen alrededor del viewport (0px indica que el margen es cero)
-  threshold: 0.1 // Umbral de visibilidad (0.1 significa que el 10% del elemento debe ser visible)
-};
-
-// Crear una instancia de IntersectionObserver con una función de devolución de llamada
-const lazyImageObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const lazyImage = entry.target;
-      lazyImage.style.opacity = 1; // Mostramos la imagen al establecer la opacidad en 1
-      lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`;
-      lazyImageObserver.unobserve(lazyImage);
-    }
-  });
-}, lazyImageOptions);
-
-// Observar cada elemento con la clase 'movie-card__poster'
-lazyImages.forEach(lazyImage => {
-  lazyImageObserver.observe(lazyImage);
-});
-}
-
- function getTrailerKey(movieId) {
-  var trailerKey = "";
-
-  $.ajax({
-   url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=fd7402172ca9f36816c7691becaf455f`,
-
-   async: false,
-
-   success: function (data) {
-    var videos = data.results.filter(function (video) {
-     return (
-      video.site === "YouTube" && 
-      video.type === "Trailer" && 
-      video.iso_639_1 === "en"
-     );
     });
 
-    if (videos.length > 0) {
-     trailerKey = videos[0].key;
-    }
-   }
-  });
+    $("#results").html(resultsHtml);
 
-  return trailerKey;
- }
+    // Seleccionar todos los elementos con la clase 'movie-card__poster'
+    const lazyImages = document.querySelectorAll('.movie-card__poster');
 
-function getGenres(genreIds) {
-       var genres = {
-         28: "Accion",
+    // Opciones de configuración del IntersectionObserver
+    const lazyImageOptions = {
+      rootMargin: '0px', // Margen alrededor del viewport (0px indica que el margen es cero)
+      threshold: 0.1 // Umbral de visibilidad (0.1 significa que el 10% del elemento debe ser visible)
+    };
 
-         12: "Aventura",
+    // Crear una instancia de IntersectionObserver con una función de devolución de llamada
+    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const lazyImage = entry.target;
+          lazyImage.style.opacity = 1; // Mostramos la imagen al establecer la opacidad en 1
+          lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`;
+          lazyImageObserver.unobserve(lazyImage);
+        }
+      });
+    }, lazyImageOptions);
 
-         16: "Animacion",
+    // Observar cada elemento con la clase 'movie-card__poster'
+    lazyImages.forEach(lazyImage => {
+      lazyImageObserver.observe(lazyImage);
+    });
+  }
 
-         35: "Comedia",
+  function getTrailerKey(movieId) {
+    var trailerKey = "";
 
-         80: "Crimen",
+    $.ajax({
+      url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=fd7402172ca9f36816c7691becaf455f`,
 
-         99: "Documental",
+      async: false,
 
-         18: "Drama",
+      success: function(data) {
+        var videos = data.results.filter(function(video) {
+          return (
+            video.site === "YouTube" &&
+            video.type === "Trailer" &&
+            video.iso_639_1 === "en"
+          );
+        });
 
-         10751: "Familiar",
+        if (videos.length > 0) {
+          trailerKey = videos[0].key;
+        }
+      }
+    });
 
-         14: "Fantasia",
+    return trailerKey;
+  }
 
-         36: "Historia",
+  function getGenres(genreIds) {
+    var genres = {
+      28: "Accion",
 
-         27: "Terror",
+      12: "Aventura",
 
-         10402: "Musica",
+      16: "Animacion",
 
-         9648: "Misterio",
+      35: "Comedia",
 
-         10749: "Romance",
+      80: "Crimen",
 
-         878: "Ciencia‎ Ficcion",
+      99: "Documental",
 
-         10770: "Película‎ de‎ la‎ Television",
+      18: "Drama",
 
-         53: "Suspenso",
+      10751: "Familiar",
 
-         10752: "Belica",
+      14: "Fantasia",
 
-         37: "Oeste",
+      36: "Historia",
 
-         10759: "Accion‎ y‎ Aventura",
+      27: "Terror",
 
-         10762: "Infantil",
+      10402: "Musica",
 
-         10763: "Noticias",
+      9648: "Misterio",
 
-         10764: "Realidad",
+      10749: "Romance",
 
-         10765: "Ciencia‎ Ficcion‎ y‎ Fantasia",
+      878: "Ciencia‎ Ficcion",
 
-         10766: "Serial",
+      10770: "Película‎ de‎ la‎ Television",
 
-         10767: "Conversacion",
+      53: "Suspenso",
 
-         10768: "Politico",
+      10752: "Belica",
 
-         10769: "Opcion‎ Interactiva"
-};
+      37: "Oeste",
 
-  var genreList = [];
+      10759: "Accion‎ y‎ Aventura",
 
-  genreIds.forEach(function (genreId) {
-   if (genres[genreId]) {
-    genreList.push(genres[genreId]);
-   }
-  });
+      10762: "Infantil",
 
-  return genreList.join(",‎ ");
- }
+      10763: "Noticias",
 
- function getLanguage(languageCode) {
-  var languages = {
-   en: "🇺🇸‎ Ingles",
+      10764: "Realidad",
 
-   ca: "🇪🇸‎ Catalan",
+      10765: "Ciencia‎ Ficcion‎ y‎ Fantasia",
 
-   es: "🇲🇽‎ /‎ 🇪🇸‎ Español",
+      10766: "Serial",
 
-   fr: "🇫🇷‎ Frances",
+      10767: "Conversacion",
 
-   de: "🇩🇪‎ Aleman",
+      10768: "Politico",
 
-   it: "🇮🇹‎ Italiano",
+      10769: "Opcion‎ Interactiva"
+    };
 
-   ja: "🇯🇵‎ Japones",
+    var genreList = [];
 
-   ko: "🇰🇷‎ /‎ 🇰🇵‎ Coreano",
+    genreIds.forEach(function(genreId) {
+      if (genres[genreId]) {
+        genreList.push(genres[genreId]);
+      }
+    });
 
-   ru: "🇷🇺‎ Ruso",
+    return genreList.join(",‎ ");
+  }
 
-   zh: "🇨🇳‎ Chino"
-  };
+  function getLanguage(languageCode) {
+    var languages = {
+      en: "🇺🇸‎ Ingles",
 
-  return languages[languageCode] || languageCode;
- }
+      ca: "🇪🇸‎ Catalan",
+
+      es: "🇲🇽‎ /‎ 🇪🇸‎ Español",
+
+      fr: "🇫🇷‎ Frances",
+
+      de: "🇩🇪‎ Aleman",
+
+      it: "🇮🇹‎ Italiano",
+
+      ja: "🇯🇵‎ Japones",
+
+      ko: "🇰🇷‎ /‎ 🇰🇵‎ Coreano",
+
+      ru: "🇷🇺‎ Ruso",
+
+      zh: "🇨🇳‎ Chino"
+    };
+
+    return languages[languageCode] || languageCode;
+  }
 });
 
 function getColor(vote) {
   if (vote >= 10) {
     return '#63b800'
   } else if (vote >= 7.5) {
-     return '#c3d800'
+    return '#c3d800'
   } else if (vote >= 5) {
-     return '#fff457'
-   } else if (vote >= 2.5) {
-      return '#fffbb2'
-    } else {
+    return '#fff457'
+  } else if (vote >= 2.5) {
+    return '#fffbb2'
+  } else {
     return '#fffbf4'
   }
 }
@@ -399,9 +399,9 @@ function obtenerPosterPelicula(movieId) {
 
       var posterPath = posters.find(function(poster) {
         return (
-          poster.iso_639_1 === "es"
-       || poster.iso_639_1 === "en"
-     //|| poster.iso_639_1 === "null"
+          poster.iso_639_1 === "es" ||
+          poster.iso_639_1 === "en"
+          //|| poster.iso_639_1 === "null"
         );
       });
 
@@ -422,22 +422,26 @@ function obtenerBackdropPelicula(movieId) {
   var backdrop_URL = '';
 
   $.ajax({
-    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_EN}`,
+    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
     async: false,
     success: function(response) {
       var backdrops = response.backdrops;
 
+      // Ordenar los backdrops por popularidad de forma descendente
+      backdrops.sort(function(a, b) {
+        return b.popularity - a.popularity;
+      });
+
       var backdropPath = backdrops.find(function(backdrop) {
-        
         return (
-          poster.iso_639_1 === "en"
-       || poster.iso_639_1 === "es"
-       || poster.iso_639_1 === "null"
+          backdrop.iso_639_1 === "es" ||
+          backdrop.iso_639_1 === "en" ||
+          backdrop.iso_639_1 === "null"
         );
       });
 
       if (backdropPath) {
-        backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
+        backdrop_URL = `https://image.tmdb.org/t/p/w500${backdropPath.file_path}`;
       }
     },
     error: function(error) {
