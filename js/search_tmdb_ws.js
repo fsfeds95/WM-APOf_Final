@@ -1,89 +1,80 @@
 // BASE
 const BASE_URL = 'https://api.themoviedb.org/3';
+// API key TMDB
+const API_KEY = 'api_key=74dc824830c7f93dc61b03e324070886';
+
 // Resolución de imagenes
 const IMG_ORI = 'https://image.tmdb.org/t/p/original';
 const IMG_500 = 'https://image.tmdb.org/t/p/w500';
 const IMG_300 = 'https://image.tmdb.org/t/p/w300';
 const IMG_185 = 'https://image.tmdb.org/t/p/w185';
 const IMG_92 = 'https://image.tmdb.org/t/p/w92';
-// API key TMDB
-const API_KEY = 'api_key=74dc824830c7f93dc61b03e324070886';
-const query = 'query=';
+
 // Lenguajes
 const LANG_ES = 'language=es-MX';
 const LANG_EN = 'language=en-US';
 
 $(document).ready(function() {
-  $("#searchButton").click(function() {
-    var searchQuery = $("#searchInput").val();
-
-    searchMovies(searchQuery);
-  });
-
-  function searchMovies(query) {
-    if (query == "") {
-      $("#results").html("<p>Ingrese un título de película para buscar.</p>");
-    } else {
-      $.getJSON(
-        BASE_URL + "/search/movie?" + API_KEY + "&query=" +
-        query +
-        "&" + LANG_ES,
-        function(data) {
-          var movies = data.results;
-
-          if (movies.length === 0) {
-            $("#results").html("<p>No se encontraron películas con ese título.</p>");
-          } else {
-            displayMovies(movies);
-          }
-        }
-      );
-    }
+ $("#searchButton").click(function() {
+  var searchQuery = $("#searchInput").val();
+  searchMovies(searchQuery);
+ });
+ $("#searchInput").on("keypress", function(event) {
+  if (event.key === "Enter") {
+   var searchQuery = $("#searchInput").val();
+   searchMovies(searchQuery);
   }
+ });
 
-  function displayMovies(movies) {
-    var resultsHtml = "";
 
-    movies.forEach(function(movie) {
-      var id = movie.id;
 
-      var title = movie.title;
+ function searchMovies(query) {
+  if (query == "") {
+   $("#results").html("<p>Ingrese un título de película para buscar.</p>");
+  } else {
+   $.getJSON(
+    BASE_URL + "/search/movie?" + API_KEY + "&query=" +
+    query +
+    "&" + LANG_ES,
+    function(data) {
+     var movies = data.results;
 
-      var originalTitle = movie.original_title;
+     if (movies.length === 0) {
+      $("#results").html("<p>No se encontraron películas con ese título.</p>");
+     } else {
+      displayMovies(movies);
+     }
+    }
+   );
+  }
+ }
 
-      var tagline = movie.tagline;
+ function displayMovies(movies) {
+  var resultsHtml = "";
 
-      var releaseYear = movie.release_date.split("-")[0];
+  movies.forEach(function(movie) {
+   var id = movie.id;
 
-      var posterPath = movie.poster_path;
+   var title = movie.title;
 
-      var backdropPath = movie.backdrop_path;
+   var originalTitle = movie.original_title;
 
-      var backdropUrl = backdropPath ? (language === "en-US" ? IMG_500 : IMG_ORI) + backdropPath : "";
+   var tagline = movie.tagline;
 
-      var language = movie.original_language;
+   var releaseYear = movie.release_date.split("-")[0];
 
-      var overview = movie.overview;
+   var posterPath = movie.poster_path;
 
-      var duration = movie.runtime;
+   var backdropPath = movie.backdrop_path;
 
-      var replaceTitle = {
-        ":": "",
-        " ": "_",
-        "-": "",
-        "¡": "",
-        "!": "",
-        ",": "",
-        "¿": "",
-        "á": "a",
-        "é": "e",
-        "í": "i",
-        "ó": "o",
-        "ú": "u"
-      };
+   var language = movie.original_language;
 
-      resultsHtml += `<div class="movie-card">
-<div class="movie-card__header" style="background-image: url(${obtenerBackdropPelicula(id)})">
+   var overview = movie.overview;
+
+   var duration = movie.runtime;
+
+   resultsHtml += `<div class="movie-card">
+<div class="movie-card__header" style="background-image: url(${getBackdropMovie(id)})">
   <span class="movie-card_genre">ID:‎ ${id}</span>
   <span class="movie-card_genre">
     <a href="https://watermark-astropeliculas-final.onrender.com/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
@@ -91,7 +82,7 @@ $(document).ready(function() {
     </a>
   </span>
   <span class="movie-card_genre">
-    <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${obtenerBackdropPelicula(id)}" target="_blank">
+    <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${getBackdropMovie(id)}" target="_blank">
       Backdrop
     </a>
   </span>
@@ -102,7 +93,7 @@ $(document).ready(function() {
   </span>
 </div>
 <div class="movie-card_content">
-  <div class="movie-card__poster" data-src="${obtenerPosterPelicula(id)}"></div>
+  <div class="movie-card__poster" data-src="${getPosterMovie(id)}"></div>
   <div class="d">
       
 <button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i>‎ Copiar</button>
@@ -162,17 +153,18 @@ $(document).ready(function() {
 
 
 <div class="posdata">
-⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*</div>
+⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*
+</div>
 </div>
 
 <div>
-  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/b?url=${obtenerBackdropPelicula(id)}">
+  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/b?url=${getBackdropMovie(id)}">
     BackDrop
   </a><br>
-  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/p?url=${obtenerPosterPelicula(id)}">
+  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/p?url=${getPosterMovie(id)}">
     Poster
   </a><br>
-    <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/ws?url=${obtenerPosterPelicula(id)}">
+    <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/ws?url=${getPosterMovie(id)}">
       Poster Ws
     </a>
 </div>
@@ -180,274 +172,264 @@ $(document).ready(function() {
 </div>
 </div>
 </div>`;
+  });
+
+  $("#results").html(resultsHtml);
+
+  // Seleccionar todos los elementos con la clase 'movie-card__poster'
+  const lazyImages = document.querySelectorAll('.movie-card__poster');
+
+  // Opciones de configuración del IntersectionObserver
+  const lazyImageOptions = {
+   // Margen alrededor del viewport (0px indica que el margen es cero)
+   rootMargin: '0px',
+   // Umbral de visibilidad (0.1 significa que el 10% del elemento debe ser visible)
+   threshold: 1
+  };
+
+  // Crear una instancia de IntersectionObserver con una función de devolución de llamada
+  const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+   entries.forEach(entry => {
+    if (entry.isIntersecting) {
+     const lazyImage = entry.target;
+     lazyImage.style.opacity = 1; // Mostramos la imagen al establecer la opacidad en 1
+     lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`;
+     lazyImageObserver.unobserve(lazyImage);
+    }
+   });
+  }, lazyImageOptions);
+
+  // Observar cada elemento con la clase 'movie-card__poster'
+  lazyImages.forEach(lazyImage => {
+   lazyImageObserver.observe(lazyImage);
+  });
+ }
+
+// Funcion: Obtener key del trailer de youtube
+ function getTrailerKey(movieId) {
+  var trailerKey = "";
+
+  $.ajax({
+   url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=fd7402172ca9f36816c7691becaf455f`,
+
+   async: false,
+
+   success: function(data) {
+    var videos = data.results.filter(function(video) {
+     return (
+      video.site === "YouTube" &&
+      video.type === "Trailer" &&
+      video.iso_639_1 === "en"
+     );
     });
 
-    $("#results").html(resultsHtml);
+    if (videos.length > 0) {
+     trailerKey = videos[0].key;
+    }
+   }
+  });
 
-    // Seleccionar todos los elementos con la clase 'movie-card__poster'
-    const lazyImages = document.querySelectorAll('.movie-card__poster');
+  return trailerKey;
+ }
 
-    // Opciones de configuración del IntersectionObserver
-    const lazyImageOptions = {
-      rootMargin: '0px', // Margen alrededor del viewport (0px indica que el margen es cero)
-      threshold: 0.1 // Umbral de visibilidad (0.1 significa que el 10% del elemento debe ser visible)
-    };
+// Funcion: Traducir los generos
+ function getGenres(genreIds) {
+  var genres = {
+   28: "Accion",
 
-    // Crear una instancia de IntersectionObserver con una función de devolución de llamada
-    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const lazyImage = entry.target;
-          lazyImage.style.opacity = 1; // Mostramos la imagen al establecer la opacidad en 1
-          lazyImage.style.backgroundImage = `url(${lazyImage.getAttribute('data-src')})`;
-          lazyImageObserver.unobserve(lazyImage);
-        }
-      });
-    }, lazyImageOptions);
+   12: "Aventura",
 
-    // Observar cada elemento con la clase 'movie-card__poster'
-    lazyImages.forEach(lazyImage => {
-      lazyImageObserver.observe(lazyImage);
-    });
-  }
+   16: "Animacion",
 
-  function getTrailerKey(movieId) {
-    var trailerKey = "";
+   35: "Comedia",
 
-    $.ajax({
-      url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=fd7402172ca9f36816c7691becaf455f`,
+   80: "Crimen",
 
-      async: false,
+   99: "Documental",
 
-      success: function(data) {
-        var videos = data.results.filter(function(video) {
-          return (
-            video.site === "YouTube" &&
-            video.type === "Trailer" &&
-            video.iso_639_1 === "en"
-          );
-        });
+   18: "Drama",
 
-        if (videos.length > 0) {
-          trailerKey = videos[0].key;
-        }
-      }
-    });
+   10751: "Familiar",
 
-    return trailerKey;
-  }
+   14: "Fantasia",
 
-  function getGenres(genreIds) {
-    var genres = {
-      28: "Accion",
+   36: "Historia",
 
-      12: "Aventura",
+   27: "Terror",
 
-      16: "Animacion",
+   10402: "Musica",
 
-      35: "Comedia",
+   9648: "Misterio",
 
-      80: "Crimen",
+   10749: "Romance",
 
-      99: "Documental",
+   878: "Ciencia‎ Ficcion",
 
-      18: "Drama",
+   10770: "Película‎ de‎ la‎ Television",
 
-      10751: "Familiar",
+   53: "Suspenso",
 
-      14: "Fantasia",
+   10752: "Belica",
 
-      36: "Historia",
+   37: "Oeste",
 
-      27: "Terror",
+   10759: "Accion‎ y‎ Aventura",
 
-      10402: "Musica",
+   10762: "Infantil",
 
-      9648: "Misterio",
+   10763: "Noticias",
 
-      10749: "Romance",
+   10764: "Realidad",
 
-      878: "Ciencia‎ Ficcion",
+   10765: "Ciencia‎ Ficcion‎ y‎ Fantasia",
 
-      10770: "Película‎ de‎ la‎ Television",
+   10766: "Serial",
 
-      53: "Suspenso",
+   10767: "Conversacion",
 
-      10752: "Belica",
+   10768: "Politico",
 
-      37: "Oeste",
+   10769: "Opcion‎ Interactiva"
+  };
 
-      10759: "Accion‎ y‎ Aventura",
+  var genreList = [];
 
-      10762: "Infantil",
+  genreIds.forEach(function(genreId) {
+   if (genres[genreId]) {
+    genreList.push(genres[genreId]);
+   }
+  });
 
-      10763: "Noticias",
+  return genreList.join(",‎ ");
+ }
 
-      10764: "Realidad",
+// Función: Traducir el lenguaje
+ function getLanguage(languageCode) {
+  var languages = {
+   en: "🇺🇸‎ Ingles",
 
-      10765: "Ciencia‎ Ficcion‎ y‎ Fantasia",
+   ca: "🇪🇸‎ Catalan",
 
-      10766: "Serial",
+   es: "🇲🇽‎ /‎ 🇪🇸‎ Español",
 
-      10767: "Conversacion",
+   fr: "🇫🇷‎ Frances",
 
-      10768: "Politico",
+   de: "🇩🇪‎ Aleman",
 
-      10769: "Opcion‎ Interactiva"
-    };
+   it: "🇮🇹‎ Italiano",
 
-    var genreList = [];
+   ja: "🇯🇵‎ Japones",
 
-    genreIds.forEach(function(genreId) {
-      if (genres[genreId]) {
-        genreList.push(genres[genreId]);
-      }
-    });
+   ko: "🇰🇷‎ /‎ 🇰🇵‎ Coreano",
 
-    return genreList.join(",‎ ");
-  }
+   ru: "🇷🇺‎ Ruso",
 
-  function getLanguage(languageCode) {
-    var languages = {
-      en: "🇺🇸‎ Ingles",
+   zh: "🇨🇳‎ Chino"
+  };
 
-      ca: "🇪🇸‎ Catalan",
-
-      es: "🇲🇽‎ /‎ 🇪🇸‎ Español",
-
-      fr: "🇫🇷‎ Frances",
-
-      de: "🇩🇪‎ Aleman",
-
-      it: "🇮🇹‎ Italiano",
-
-      ja: "🇯🇵‎ Japones",
-
-      ko: "🇰🇷‎ /‎ 🇰🇵‎ Coreano",
-
-      ru: "🇷🇺‎ Ruso",
-
-      zh: "🇨🇳‎ Chino"
-    };
-
-    return languages[languageCode] || languageCode;
-  }
+  return languages[languageCode] || languageCode;
+ }
 });
 
-function getColor(vote) {
-  if (vote >= 10) {
-    return '#63b800'
-  } else if (vote >= 7.5) {
-    return '#c3d800'
-  } else if (vote >= 5) {
-    return '#fff457'
-  } else if (vote >= 2.5) {
-    return '#fffbb2'
-  } else {
-    return '#fffbf4'
-  }
-}
-
-
-// Funcion actores ------------------------
+// Funcion: Obtener actores
 function showMovieCredits(movieId) {
-  var movieCredits = '';
+ var movieCredits = '';
 
-  $.ajax({
-    url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_ES}`,
-    async: false,
-    success: function(response) {
+ $.ajax({
+  url: `${BASE_URL}/movie/${movieId}/credits?${API_KEY}&${LANG_ES}`,
+  async: false,
+  success: function(response) {
 
-      // Filtrar los actores más relevantes
-      var relevantActors = response.cast.filter(function(actor) {
-        return actor.order <= 2;
-        // Puedes ajustar el numero de relevancia según tus preferencias, si quieres que aparezcan "3 actores" tienes que colocar como numero "2"
-      });
+   // Filtrar los actores más relevantes
+   var relevantActors = response.cast.filter(function(actor) {
+    return actor.order <= 2;
+    // Puedes ajustar el numero de relevancia según tus preferencias, si quieres que aparezcan "3 actores" tienes que colocar como numero "2"
+   });
 
-      // Obtener solo los nombres de los actores y unirlos en un string
-      var actorNames = relevantActors.map(function(actor) {
-        return actor.name;
-      });
+   // Obtener solo los nombres de los actores y unirlos en un string
+   var actorNames = relevantActors.map(function(actor) {
+    return actor.name;
+   });
 
-      movieCredits = actorNames.join(", ");
-      // Dividir los nombres de los actores
+   movieCredits = actorNames.join(", ");
+   // Dividir los nombres de los actores
 
-    },
-    error: function(error) {
-      console.log(error);
-      // Algo no salió como esperábamos.
-    }
-  });
+  },
+  error: function(error) {
+   console.log(error);
+   // Algo no salió como esperábamos.
+  }
+ });
 
-  return movieCredits;
+ return movieCredits;
 }
 
-// Funcion obtener poster de pelicula en español
-function obtenerPosterPelicula(movieId) {
-  var poster_URL = '';
+// Funcion: Obtener poster de pelicula
+function getPosterMovie(movieId) {
+ var poster_URL = '';
 
-  $.ajax({
-    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
-    async: false,
-    success: function(response) {
-      var posters = response.posters;
+ $.ajax({
+  url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
+  async: false,
+  success: function(response) {
+   var posters = response.posters;
 
-      // Ordenar los posters por popularidad de forma descendente
-      posters.sort(function(a, b) {
-        return b.popularity - a.popularity;
-      });
+   // Ordenar los posters por popularidad de forma descendente
+   posters.sort(function(a, b) {
+    return b.popularity - a.popularity;
+   });
 
-      var posterPath = posters.find(function(poster) {
-        return (
-          poster.iso_639_1 === "es" ||
-          poster.iso_639_1 === "en"
-          //|| poster.iso_639_1 === "null"
-        );
-      });
+   var posterPath = posters.find(function(poster) {
+    return (
+     poster.iso_639_1 === "es" ||
+     poster.iso_639_1 === "en"
+  //|| poster.iso_639_1 === "null"
+    );
+   });
 
-      if (posterPath) {
-        poster_URL = `https://image.tmdb.org/t/p/w500${posterPath.file_path}`;
-      }
-    },
-    error: function(error) {
-      console.log('Ay, mi amor, algo salió mal:', error);
-    }
-  });
+   if (posterPath) {
+    poster_URL = `https://image.tmdb.org/t/p/original${posterPath.file_path}`;
+   }
+  },
+  error: function(error) {
+   console.log('Ay, mi amor, algo salió mal:', error);
+  }
+ });
 
-  return poster_URL;
+ return poster_URL;
 }
 
-// Funcion obtener backdrop de pelicula en español
-function obtenerBackdropPelicula(movieId) {
-  var backdrop_URL = '';
+// Funcion: Obtener backdrop de pelicula
+function getBackdropMovie(movieId) {
+ var backdrop_URL = '';
 
-  $.ajax({
-    url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
-    async: false,
-    success: function(response) {
-      var backdrops = response.backdrops;
+ $.ajax({
+  url: `${BASE_URL}/movie/${movieId}/images?${API_KEY}&include_image_language=es,en,null&${LANG_ES}`,
+  async: false,
+  success: function(response) {
+   var backdrops = response.backdrops;
 
-      // Ordenar los backdrops por popularidad de forma descendente
-      backdrops.sort(function(a, b) {
-        return b.popularity - a.popularity;
-      });
+   // Ordenar los backdrops por popularidad de forma descendente
+   backdrops.sort(function(a, b) {
+    return b.popularity - a.popularity;
+   });
 
-      var backdropPath = backdrops.find(function(backdrop) {
-        return (
-          backdrop.iso_639_1 === "es" ||
-          backdrop.iso_639_1 === "en" ||
-          backdrop.iso_639_1 === "null"
-        );
-      });
+   var backdropPath = backdrops.find(function(backdrop) {
+    return (
+     backdrop.iso_639_1 === "es" ||
+     backdrop.iso_639_1 === "en"
+  || backdrop.iso_639_1 === "null"
+    );
+   });
 
-      if (backdropPath) {
-        backdrop_URL = `https://image.tmdb.org/t/p/w500${backdropPath.file_path}`;
-      }
-    },
-    error: function(error) {
-      console.log('Ay, mi amor, algo salió mal:', error);
-    }
-  });
+   if (backdropPath) {
+    backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
+   }
+  },
+  error: function(error) {
+   console.log('Ay, mi amor, algo salió mal:', error);
+  }
+ });
 
-  return backdrop_URL;
+ return backdrop_URL;
 }
