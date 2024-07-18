@@ -13,68 +13,73 @@ const LANG_ES = 'language=es';
 const LANG_EN = 'language=en';
 
 $(document).ready(function() {
-  $("#searchButton").click(function() {
-    var searchQuery = $("#searchInput").val();
+ $("#searchButton").click(function() {
+  var searchQuery = $("#searchInput").val();
 
-    searchCollection(searchQuery);
-  });
+  searchCollection(searchQuery);
+ });
 
-  async function searchCollection(searchQuery) {
-    if (searchQuery == "") {
-      $("#results").html("<p>Ingrese un título de película para buscar.</p>");
+ async function searchCollection(searchQuery) {
+  if (searchQuery == "") {
+   $("#results").html("<p>Ingrese un título de película para buscar.</p>");
+  } else {
+   try {
+    const response = await fetch(BASE_URL + '/search/collection?' + API_KEY + '&query=' + searchQuery + '&' + LANG_ES);
+
+
+//https://api.themoviedb.org/3/search/collection?api_key=74dc824830c7f93dc61b03e324070886&query=the purge&language=es
+
+
+    const data = await response.json();
+    const collections = data.results;
+
+    if (collections.length === 0) {
+     $("#results").html("<p>No se encontraron películas con ese título.</p>");
     } else {
-      try {
-        const response = await fetch(BASE_URL + '/search/collection?' + API_KEY + '&query=' + searchQuery + '&' + LANG_ES);
-        const data = await response.json();
-        const collections = data.results;
-
-        if (collections.length === 0) {
-          $("#results").html("<p>No se encontraron películas con ese título.</p>");
-        } else {
-          displayCollection(collections);
-        }
-      } catch (error) {
-        console.error('¡Ups! Algo salió mal:', error);
-      }
+     displayCollection(collections);
     }
+   } catch (error) {
+    console.error('¡Ups! Algo salió mal:', error);
+   }
   }
+ }
 
-  async function displayCollection(collections) {
-    var resultsHtml = "";
+ async function displayCollection(collections) {
+  var resultsHtml = "";
 
-    for (const collection of collections) {
-      var idCollection = collection.id;
-      var title = collection.name;
-      var originalTitle = collection.original_name;
-      var posterPath = collection.poster_path;
-      var backdropPath = collection.backdrop_path;
-      var overview = collection.overview;
-      var replaceTitle = {
-        ":": "",
-        " ": "_",
-        "-": "",
-        "¡": "",
-        "!": "",
-        ",": "",
-        "¿": "",
-        "á": "a",
-        "é": "e",
-        "í": "i",
-        "ó": "o",
-        "ú": "u"
-      };
+  for (const collection of collections) {
+   var idCollection = collection.id;
+   var title = collection.name.replace(' - Colección', '');
+   var originalTitle = collection.original_name;
+   var posterPath = collection.poster_path;
+   var backdropPath = collection.backdrop_path;
+   var overview = collection.overview;
+   var replaceTitle = {
+    ":": "",
+    " ": "_",
+    "-": "",
+    "¡": "",
+    "!": "",
+    ",": "",
+    "¿": "",
+    "á": "a",
+    "é": "e",
+    "í": "i",
+    "ó": "o",
+    "ú": "u"
+   };
 
-      //------------------------------------------
+   //------------------------------------------
 
-      try {
-        const movieTitles = await getMovieTitles(idCollection);
-        const totalMovies = await getTotalMovies(idCollection);
+   try {
+    const movieTitles = await getMovieTitles(idCollection);
+    const totalMovies = await getTotalMovies(idCollection);
 
-        const totalRevenue = await getTotalRevenue(idCollection);
-        
-        const backdropPath_1 = await getBackdropBackdrop(idCollection);
+    const totalRevenue = await getTotalRevenue(idCollection);
 
-        resultsHtml += `
+    const backdropPath_1 = await getBackdropBackdrop(idCollection);
+
+    resultsHtml += `
 
 <div class="movie-card">
   
@@ -113,42 +118,25 @@ $(document).ready(function() {
       <div class="contenedor border" id="peli_${idCollection}">
         <div class="titulo_es">
           <b>
-            🍿‎ *${title}*
+            🍿‎ *Colección: ${title}*
           </b>
         </div>
         
-        <div class="titulo_en">
-          📽‎ _<i>${originalTitle}</i>_
-        </div>
-        
-        <div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
-
-        <div class="titulosCollection">
-          <b>*Titulos de la colección*</b> | ${movieTitles}
-        </div><div>‎ </div>
-
-        <div class="titulosCollection">
-          <b>*Peliculas de la colección*</b> |
-        ${totalMovies}
-        </div><div>‎ </div>
-
-        <div class="titulosCollection">
-          <b>*Ganancias totales*</b> |
-        ${totalRevenue}
-        </div><div>‎ </div>
+        <div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
         
         <div class="Sinopsis">
           <code>
-            📝‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Sinopsis‎ 
-            | ${overview}
+           <b>*Sinopsis*</b>‎ |️‎ ${overview}
           </code>
         </div><div>‎ </div>
 
-        <div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
+        <div class="titulosCollection">
+         <b>*Peliculas*</b>&nbsp;|️‎ ${movieTitles}
+        </div><div>‎ </div>
 
-        <div class="posdata">
-          ⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*
-        </div>
+        <div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
+
+        <div class="descarga"><b>*Ver️‎ /️‎ Descargar*</b>‎ |&nbsp;</div>
 
 
       </div>
@@ -160,112 +148,115 @@ $(document).ready(function() {
   
 </div>
         `;
-      } catch (error) {
-        console.error('¡Ups! Algo salió mal:', error);
-      }
-    }
-
-    $("#results").html(resultsHtml);
+   } catch (error) {
+    console.error('¡Ups! Algo salió mal:', error);
+   }
   }
 
+  $("#results").html(resultsHtml);
+ }
 
-  // Función
-  // Numero total de películas en la colección
-  async function getTotalMovies(idCollection) {
-    try {
-      const response = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}`);
-      //
-      const data = await response.json();
-      const moviesList = data.parts.filter(movie => movie.release_date);
-      // Filtrar las películas que tienen una fecha de lanzamiento
-      const totalMovies = moviesList.length;
-      // Utilizar la longitud del array filtrado
 
-      // console.log(`Numeros de películas en la colección ${idCollection}: ${totalMovies}`);
-      return totalMovies;
-    } catch (error) {
-      console.error('¡Ups! Algo salió mal:', error);
-      throw error;
+ // Función
+ // Numero total de películas en la colección
+ async function getTotalMovies(idCollection) {
+  try {
+   const response = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}`);
+   //
+   const data = await response.json();
+   const moviesList = data.parts.filter(movie => movie.release_date);
+   // Filtrar las películas que tienen una fecha de lanzamiento
+   const totalMovies = moviesList.length;
+   // Utilizar la longitud del array filtrado
+
+   // console.log(`Numeros de películas en la colección ${idCollection}: ${totalMovies}`);
+   return totalMovies;
+  } catch (error) {
+   console.error('¡Ups! Algo salió mal:', error);
+   throw error;
+  }
+ }
+
+
+ // Función
+ // Titulos de las peliculas con su año de estreno
+ async function getMovieTitles(idCollection) {
+  try {
+   const response = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}&${LANG_ES}`);
+   const data = await response.json();
+   const moviesList = data.parts.filter(movie => movie.release_date).sort(function(a, b) {
+    return parseInt(a.release_date.slice(0, 4)) - parseInt(b.release_date.slice(0, 4));
+   });
+   const formattedTitles = moviesList.map(movie => `️</br>${movie.title} (<b>*${movie.release_date.slice(0, 4)}*</b>)`).join(',️');
+
+   return formattedTitles;
+  } catch (error) {
+   console.error('¡Ups! Algo salió mal:', error);
+   throw error;
+  }
+ }
+
+
+ // Función
+ // Ganancias totales de las películas de la colección 
+ async function getTotalRevenue(idCollection) {
+  try {
+   const collectionResponse = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}`);
+   const collectionData = await collectionResponse.json();
+   const movieIds = collectionData.parts.map(movie => movie.id);
+
+   let totalRevenue = 0;
+
+   for (const movieId of movieIds) {
+    const movieResponse = await fetch(`${BASE_URL_MOVIE}/${movieId}?${API_KEY}`);
+    const movieData = await movieResponse.json();
+
+    if (movieData.revenue) {
+     totalRevenue += movieData.revenue;
     }
+   }
+
+   const totalRevenueInDollars = `${totalRevenue.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}`;
+
+   return totalRevenueInDollars;
+  } catch (error) {
+   console.error('¡Ups! Algo salió mal:', error);
+   throw error;
+  }
+ }
+
+
+ // Función
+ // Imagen de fondo
+ async function getBackdropBackdrop(idCollection) {
+  let backdrop_URL = '';
+
+  try {
+   const response = await fetch(`${BASE_URL}/collection/${idCollection}/images?${API_KEY}&include_image_language=en,null&${LANG_EN}`);
+   const data = await response.json();
+
+   let backdrops = data.backdrops;
+
+   // Ordenar los backdrops por popularidad de forma descendente
+   backdrops.sort((a, b) => b.popularity - a.popularity);
+
+   const backdropPath = backdrops.find(backdrop => {
+    return (
+     //  backdrop.iso_639_1 === "es" ||
+     backdrop.iso_639_1 === "en" ||
+     backdrop.iso_639_1 === "null"
+    );
+   });
+
+   if (backdropPath) {
+    backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
+   }
+  } catch (error) {
+   console.log('Ay, mi amor, algo salió mal:', error);
   }
 
+  return backdrop_URL;
+ }
 
-  // Función
-  // Titulos de las peliculas con su año de estreno
-  async function getMovieTitles(idCollection) {
-    try {
-      const response = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}`);
-      const data = await response.json();
-      const moviesList = data.parts.filter(movie => movie.release_date).sort(function(a, b) {
-        return parseInt(a.release_date.slice(0, 4)) - parseInt(b.release_date.slice(0, 4));
-      });
-      const formattedTitles = moviesList.map(movie => `${movie.title} (<b>*${movie.release_date.slice(0, 4)}*</b>)`).join(', ');
-
-      return formattedTitles;
-    } catch (error) {
-      console.error('¡Ups! Algo salió mal:', error);
-      throw error;
-    }
-  }
-
-
-  // Función
-  // Ganancias totales de las películas de la colección 
-  async function getTotalRevenue(idCollection) {
-    try {
-      const collectionResponse = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}`);
-      const collectionData = await collectionResponse.json();
-      const movieIds = collectionData.parts.map(movie => movie.id);
-
-      let totalRevenue = 0;
-
-      for (const movieId of movieIds) {
-        const movieResponse = await fetch(`${BASE_URL_MOVIE}/${movieId}?${API_KEY}`);
-        const movieData = await movieResponse.json();
-
-        if (movieData.revenue) {
-          totalRevenue += movieData.revenue;
-        }
-      }
-
-      const totalRevenueInDollars = `${totalRevenue.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}`;
-
-      return totalRevenueInDollars;
-    } catch (error) {
-      console.error('¡Ups! Algo salió mal:', error);
-      throw error;
-    }
-  }
-
-
-  async function getBackdropBackdrop(idCollection) {
-    let backdrop_URL = '';
-  
-    try {
-      const response = await fetch(`${BASE_URL}/collection/${idCollection}/images?${API_KEY}&include_image_language=en,null&${LANG_EN}`);
-      const data = await response.json();
-  
-      let backdrops = data.backdrops;
-  
-      // Ordenar los backdrops por popularidad de forma descendente
-      backdrops.sort((a, b) => b.popularity - a.popularity);
-  
-      const backdropPath = backdrops.find(backdrop => {
-        return (
-        //  backdrop.iso_639_1 === "es" ||
-          backdrop.iso_639_1 === "en" ||
-          backdrop.iso_639_1 === "null"
-        );
-      });
-  
-      if (backdropPath) {
-        backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
-      }
-    } catch (error) {
-      console.log('Ay, mi amor, algo salió mal:', error);
-    }
-  
-    return backdrop_URL;
-  }
 
 });
