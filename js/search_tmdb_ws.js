@@ -74,15 +74,15 @@ $(document).ready(function() {
    var duration = movie.runtime;
 
    resultsHtml += `<div class="movie-card">
-<div class="movie-card__header" style="background-image: url(${getBackdropMovie(id)})">
+<div class="movie-card__header" style="background-image: url(${IMG_300+getBackdropMovie(id)})">
   <span class="movie-card_genre">ID:‎ ${id}</span>
   <span class="movie-card_genre">
-    <a href="https://watermark-astropeliculas-final.onrender.com/p?url=https://image.tmdb.org/t/p/original${posterPath}" target="_blank">
+    <a href="https://watermark-astropeliculas-final.onrender.com/p?url=${IMG_185+getPosterMovie(id)}" target="_blank">
       Poster
     </a>
   </span>
   <span class="movie-card_genre">
-    <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${getBackdropMovie(id)}" target="_blank">
+    <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${IMG_ORI+getBackdropMovie(id)}" target="_blank">
       Backdrop
     </a>
   </span>
@@ -93,12 +93,12 @@ $(document).ready(function() {
   </span>
 </div>
 <div class="movie-card_content">
-  <div class="movie-card__poster" data-src="${getPosterMovie(id)}"></div>
+  <div class="movie-card__poster" data-src="${IMG_300+getPosterMovie(id)}"></div>
   <div class="d">
       
-<button class="copy" onclick="copyTextById('peli_${id}_2', this)"><i class="fa-regular fa-clipboard"></i>‎ Copiar</button>
+<button class="copy" onclick="copyTextById('peli_${id}', this)"><i class="fa-regular fa-clipboard"></i>‎ Copiar</button>
 
-<div class="contenedor border" id="peli_${id}_2">
+<div class="contenedor border" id="peli_${id}">
 
 
 
@@ -153,7 +153,9 @@ $(document).ready(function() {
 
 
 <div class="posdata">
-⚠️‎ *Posdata:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*
+ <div class="posdata_1">⚠️‎ *Posdata I:*‎ *_Los️‎ trailers️‎ de️‎ las️‎ películas️‎ estan en️‎ ingles._*</div><div>‎ </div>
+
+<div>⚠️‎ *Posdata II:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*</div>
 </div>
 </div>
 
@@ -381,14 +383,14 @@ function getPosterMovie(movieId) {
 
    var posterPath = posters.find(function(poster) {
     return (
-     poster.iso_639_1 === "es" ||
      poster.iso_639_1 === "en"
+ // ||poster.iso_639_1 === "en"
   //|| poster.iso_639_1 === "null"
     );
    });
 
    if (posterPath) {
-    poster_URL = `https://image.tmdb.org/t/p/original${posterPath.file_path}`;
+    poster_URL = posterPath.file_path;
    }
   },
   error: function(error) {
@@ -416,14 +418,25 @@ function getBackdropMovie(movieId) {
 
    var backdropPath = backdrops.find(function(backdrop) {
     return (
+     backdrop.iso_639_1 === "en" ||
      backdrop.iso_639_1 === "es" ||
-     backdrop.iso_639_1 === "en"
-  || backdrop.iso_639_1 === "null"
+     backdrop.iso_639_1 === "ca" ||
+     backdrop.iso_639_1 === "ja" ||
+     backdrop.iso_639_1 === "br" ||
+     backdrop.iso_639_1 === "fr" ||
+     backdrop.iso_639_1 === "de" ||
+     backdrop.iso_639_1 === "it" ||
+     backdrop.iso_639_1 === "ko" ||
+     backdrop.iso_639_1 === "ru" ||
+     backdrop.iso_639_1 === "zh" ||
+     backdrop.iso_639_1 === "pt" ||
+     backdrop.iso_639_1 === "nl" ||
+     backdrop.iso_639_1 === "null"
     );
    });
 
    if (backdropPath) {
-    backdrop_URL = `https://image.tmdb.org/t/p/original${backdropPath.file_path}`;
+    backdrop_URL = backdropPath.file_path;
    }
   },
   error: function(error) {
