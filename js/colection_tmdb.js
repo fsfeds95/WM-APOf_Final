@@ -77,14 +77,14 @@ $(document).ready(function() {
 
     const totalRevenue = await getTotalRevenue(idCollection);
 
-    const backdropPath_1 = await getBackdropBackdrop(idCollection);
+    const getBackdrop = await getBackdropBackdrop(idCollection);
 
     resultsHtml += `
 
 <div class="movie-card">
   
   
-  <div class="movie-card__header" style="background-image: url(${backdropPath_1})">
+  <div class="movie-card__header" style="background-image: url(${getBackdrop})">
     <span class="movie-card_genre">
       ID: ${idCollection}
     </span>
@@ -94,7 +94,7 @@ $(document).ready(function() {
       </a>
     </span>
     <span class="movie-card_genre">
-      <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${backdropPath_1}" target="_blank">
+      <a href="https://watermark-astropeliculas-final.onrender.com/b?url=${getBackdrop}" target="_blank">
         Backdrop
       </a>
     </span>
@@ -179,7 +179,7 @@ $(document).ready(function() {
 
 
  // Función
- // Titulos de las peliculas con su año de estreno
+ // Titulos de las peliculas por su año de estreno
  async function getMovieTitles(idCollection) {
   try {
    const response = await fetch(`${BASE_URL_COLLECTION}/${idCollection}?${API_KEY}&${LANG_ES}`);
