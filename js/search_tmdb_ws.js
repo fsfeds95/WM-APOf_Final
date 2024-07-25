@@ -423,3 +423,27 @@ function getBackdropMovie(movieId) {
 
  return backdrop_URL;
 }
+
+
+// Función: Obtener la duración de la película.
+function getDurationMovie(movieId) {
+ var movieDuration = '';
+
+ $.ajax({
+  url: `${BASE_URL}/movie/${movieId}?${API_KEY}&${LANG_ES}`,
+  async: false,
+  success: function(response) {
+   var duracion = response.runtime;
+   var horas = Math.floor(duracion / 60);
+   var minutos = duracion % 60;
+
+   movieDuration = `${horas}h ${minutos}m`;
+  },
+  error: function(error) {
+   console.log(error);
+   // Algo no salió como esperábamos, mi sensual gamer.
+  }
+ });
+
+ return movieDuration;
+}
