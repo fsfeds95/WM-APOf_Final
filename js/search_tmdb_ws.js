@@ -116,6 +116,10 @@ $(document).ready(function() {
 
 
 
+
+<div>⏳‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ <b>*Duración*</b>‎ |‎ ${getDurationMovie(id)}
+</div><div>‎ </div>
+
 <div class="genero"><b>🎭‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Género*‎ |</b>‎ _${getGenres(movie.genre_ids)}_</div><div>‎ </div>
 
 
@@ -143,33 +147,6 @@ $(document).ready(function() {
 
 
 <div class="descarga">🔗‎ <b>*Ver / Descargar*‎ |&nbsp;</div>
-
-
-
-
-<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
-
-
-
-
-<div class="posdata">
- <div class="posdata_1">⚠️‎ *Posdata I:*‎ *_Los️‎ trailers️‎ de️‎ las️‎ películas️‎ estan en️‎ ingles._*</div><div>‎ </div>
-
-<div>⚠️‎ *Posdata II:*‎ *_Necesitas‎ tener‎ la‎ aplicación‎ de‎ TeraBox‎ para‎ ver‎ las‎ peliculas,‎ descargala‎ gratis‎ en‎ Play‎ Store‎ o‎ App‎ Store._*</div>
-</div>
-</div>
-
-<div>
-  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/b?url=${getBackdropMovie(id)}">
-    BackDrop
-  </a><br>
-  <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/p?url=${getPosterMovie(id)}">
-    Poster
-  </a><br>
-    <a target="_blank" href="https://watermark-astropeliculas-final.onrender.com/ws?url=${getPosterMovie(id)}">
-      Poster Ws
-    </a>
-</div>
 
 </div>
 </div>
