@@ -126,7 +126,7 @@ $(document).ready(function() {
 <div><b>👤‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Reparto*‎ |</b>‎ _${showMovieCredits(id)}_</div><div>‎ </div>
 
 
-<div class="calidad"><b>📺‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Calidad*‎ |‎ *HD*</b></div><div>‎ </div>
+<div class="calidad"><b>📺‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Calidad*‎ |‎ *HD*</b></div><div>‎ </div>
 
 
 <div class="idioma"><b>🗣‎ *Idioma Original*‎ |‎ *${getLanguage(language)}*</b></div><div>‎ </div>
