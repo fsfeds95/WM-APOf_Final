@@ -106,7 +106,7 @@ $(document).ready(function() {
 <div class="titulo_es"><b>🍿‎ *${title}*‎ _(${releaseYear})_</b></div>
 
 
-<div class="titulo_en"><b>📽‎ <i>_*${originalTitle}*_</i></b></div>
+<div class="titulo_en"><b>📽‎ <i>_${originalTitle}_</i></b></div>
 
 
 
@@ -120,20 +120,22 @@ $(document).ready(function() {
 <div>⏳‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ <b>*Duración*</b>‎ |‎ ${getDurationMovie(id)}
 </div><div>‎ </div>
 
-<div class="genero"><b>🎭‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Género*‎ |</b>‎ _${getGenres(movie.genre_ids)}_</div><div>‎ </div>
+<div class="genero"><b>🎭‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Género*‎ |</b>‎ ${getGenres(movie.genre_ids)}</div><div>‎ </div>
 
 
-<div><b>👤‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Reparto*‎ |</b>‎ _${showMovieCredits(id)}_</div><div>‎ </div>
+<div><b>👤‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Reparto*‎ |</b>‎ ${showMovieCredits(id)}</div><div>‎ </div>
 
 
 <div class="calidad"><b>📺‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Calidad*‎ |‎ *HD*</b></div><div>‎ </div>
 
 
-<div class="idioma"><b>🗣‎ *Idioma Original*‎ |‎ *${getLanguage(language)}*</b></div><div>‎ </div>
+<div class="idioma"><b>🗣‎ *Idioma Original*‎ |‎ ${getLanguage(language)}</b></div><div>‎ </div>
 
 
-<div class="audio"><b>🎧‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Audio*‎ |‎ 🇲🇽‎ *Latino*</b></div><div>‎ </div>
-<div class="Sinopsis"><code>&#96;&#96;&#96;📝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sinopsis&nbsp;|<br>${overview}&#96;&#96;&#96;</code></div>
+<div class="audio"><b>🎧‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ *Audio*‎ |‎ 🇲🇽‎ Latino</b></div><div>‎ </div>
+
+
+<div class="Sinopsis"><code>&#96;&#96;&#96;📝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sinopsis&nbsp;|<br>${overview}&#96;&#96;&#96;</code></div>
 
 
 
@@ -147,7 +149,7 @@ $(document).ready(function() {
 🎞️‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ <b>*Trailer*‎ |‎ <a href="https://youtu.be/${getTrailerKey(id)}">https://youtu.be/${getTrailerKey(id)}</a></b></div><div>‎ </div>
 
 
-<div class="descarga">🔗‎ <b>*Ver / Descargar*‎ |&nbsp;</div>
+<div class="descarga">🔗‎ <b>*Ver / Descargar*‎ |‎ </div>
 
 </div>
 </div>
