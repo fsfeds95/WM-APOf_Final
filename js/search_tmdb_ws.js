@@ -111,7 +111,7 @@ $(document).ready(function() {
 
 
 
-<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
+<div class="separador"><b>➖➖➖➖➖➖➖➖➖➖</b></div>
 
 
 
@@ -137,7 +137,7 @@ $(document).ready(function() {
 
 
 
-<div class="separador">▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</div>
+<div class="separador"><b>➖➖➖➖➖➖➖➖➖➖</b></div>
 
 
 
