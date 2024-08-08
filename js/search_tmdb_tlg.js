@@ -103,9 +103,13 @@ $(document).ready(function() {
 
 <div class="initial"><b>⟨🔠⟩‎ #${title.substring(1, 0)}</b></div>
 
+<div class="separador"><b>➖➖➖➖➖➖➖➖➖➖</b></div>
+
 <div class="title_es"><b>⟨🍿⟩‎ ${title}</b></div>
 
 <div class="title_or"><b>⟨🎥⟩‎ ${originalTitle}</b></div>
+
+<div class="separador"><b>➖➖➖➖➖➖➖➖➖➖</b></div>
 
 <div class="year"><b>⟨🎟⟩‎ Estreno:‎ #Año${releaseYear}</b></div>
 
@@ -130,6 +134,8 @@ $(document).ready(function() {
 <div class=""><b>‎ </b></div>
 
 <div class="view_download"><b>⟨🔗⟩‎ Ver/Descargar:&nbsp;</b></div>
+
+<div class="separador"><b>➖➖➖➖➖➖➖➖➖➖</b></div>
 
 </div>
 </div>
